@@ -8,6 +8,8 @@ import java.awt.event.*;
  * @author Albert Wiedemann
  * @version 1.0
  */
+
+//test-kommentar
 public class Ereignisbehandlung
 {
     /**
