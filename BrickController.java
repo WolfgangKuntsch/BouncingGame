@@ -81,33 +81,23 @@ public class BrickController
     
         // ==== CORNER COLLISIONS ====
     
-        if (isCornerHit(cx, cy, cr, left, top)) {
+        if (Math.PointInCircle(cx, cy, cr, left, top)) {
             return 5; // Top-left corner
         }
     
-        if (isCornerHit(cx, cy, cr, right, top)) {
+        if (Math.PointInCircle(cx, cy, cr, right, top)) {
             return 6; // Top-right corner
         }
     
-        if (isCornerHit(cx, cy, cr, left, bottom)) {
+        if (Math.PointInCircle(cx, cy, cr, left, bottom)) {
             return 7; // Bottom-left corner
         }
     
-        if (isCornerHit(cx, cy, cr, right, bottom)) {
+        if (Math.PointInCircle(cx, cy, cr, right, bottom)) {
             return 8; // Bottom-right corner
         }
     
         // No collision
         return 0;
     }
-    
-    // ==== HELPER FUNCTION ====
-    // Returns true if circle touches the given point
-    private boolean isCornerHit(int cx, int cy, int cr, int px, int py) {
-        int dx = cx - px;
-        int dy = cy - py;
-        return dx * dx + dy * dy <= cr * cr;
-    }
-
-
-    }
+}
