@@ -25,19 +25,9 @@ public class Bat extends Figur
             WinkelSetzen(180);
             Gehen(10);
             break;
-            // Pfeil nach oben
-          case 38:
-            WinkelSetzen(90);
-            Gehen(10);
-            break;
             // Pfeil nach rechts
           case 39:
             WinkelSetzen(0);
-            Gehen(10);
-            break;
-            // Pfeil nach unten
-          case 40:
-            WinkelSetzen(270);
             Gehen(10);
             break;
         }
