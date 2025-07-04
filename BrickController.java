@@ -14,6 +14,12 @@ public class BrickController
         bricks.add(brickNew);
     }
     
+    public void frame() {
+        for (Brick brick : bricks) {
+            brick.draw();
+        }
+    }
+    
     public void collisionHandling() {
         for (Brick brick : bricks) {
             switch (collisionDetected(brick)) {

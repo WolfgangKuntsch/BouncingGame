@@ -6,12 +6,16 @@ public class Brick
     private int height; 
     private int width;
     
+    private BrickSymbol symbol;
+    
     public Brick(int xPosNew, int yPosNew, int heightNew, int widthNew)
     {
         xPos = xPosNew;
         yPos = yPosNew;
         height = heightNew;
         width = widthNew;
+        
+        symbol = new BrickSymbol(yPos, yPos, width, height);
     }
     
     public int getXPos(){
@@ -28,5 +32,9 @@ public class Brick
     
     public int getWidth(){
         return width;
+    }
+    
+    public void draw() {
+        symbol.draw(xPos, yPos);
     }
 }
