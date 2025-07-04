@@ -1,6 +1,6 @@
-public class Math
+public class CustomMath
 {
-    public Math()
+    public CustomMath()
     {
         
     }

@@ -81,19 +81,19 @@ public class BrickController
     
         // ==== CORNER COLLISIONS ====
     
-        if (Math.PointInCircle(cx, cy, cr, left, top)) {
+        if (CustomMath.PointInCircle(cx, cy, cr, left, top)) {
             return 5; // Top-left corner
         }
     
-        if (Math.PointInCircle(cx, cy, cr, right, top)) {
+        if (CustomMath.PointInCircle(cx, cy, cr, right, top)) {
             return 6; // Top-right corner
         }
     
-        if (Math.PointInCircle(cx, cy, cr, left, bottom)) {
+        if (CustomMath.PointInCircle(cx, cy, cr, left, bottom)) {
             return 7; // Bottom-left corner
         }
     
-        if (Math.PointInCircle(cx, cy, cr, right, bottom)) {
+        if (CustomMath.PointInCircle(cx, cy, cr, right, bottom)) {
             return 8; // Bottom-right corner
         }
     

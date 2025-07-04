@@ -35,7 +35,7 @@ public class PowerupController
             }
             
             //Collision between Ball and Powerup --> triggers the Powerup effect
-            if (Math.collisionBetweenCircles(ball.getXPos(), ball.getYPos(), ball.getRadius(), powerup.getXPos(), powerup.getYPos(), powerup.getRadius())) {
+            if (CustomMath.collisionBetweenCircles(ball.getXPos(), ball.getYPos(), ball.getRadius(), powerup.getXPos(), powerup.getYPos(), powerup.getRadius())) {
                 clearPowerupEffects();
                 powerup.doPowerupEffect();
                 powerups.remove(powerup);
