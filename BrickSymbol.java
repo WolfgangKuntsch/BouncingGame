@@ -3,21 +3,30 @@ public class BrickSymbol extends Symbol
     int width;
     int height;
     
-    Rechteck rechteck;
+    Rechteck r1;
+    Rechteck r2;
     
-    public BrickSymbol(int xPosNew, int yPosNew, int widthNew, int heightNew) {
-        super(xPosNew, yPosNew);
+    public BrickSymbol(int widthNew, int heightNew) {
+        super();
         width = widthNew;
         height = heightNew;
         
-        rechteck = new Rechteck();
-        rechteck.SichtbarkeitSetzen(false);
+        r1 = new Rechteck();
+        r1.SichtbarkeitSetzen(false);
+        
+        r2 = new Rechteck();
+        r2.SichtbarkeitSetzen(false);
     }
     
     @Override public void draw(int xPosNew, int yPosNew) {
-        rechteck.SichtbarkeitSetzen(true);
-        rechteck.PositionSetzen(xPosNew, yPosNew);
-        rechteck.GrößeSetzen(width, height);
-        rechteck.FarbeSetzen("grau");
+        r1.SichtbarkeitSetzen(true);
+        r1.PositionSetzen(xPosNew, yPosNew);
+        r1.GrößeSetzen(width, height);
+        r1.FarbeSetzen("schwarz");
+        
+        r2.SichtbarkeitSetzen(true);
+        r2.PositionSetzen(xPosNew + 5, yPosNew + 5);
+        r2.GrößeSetzen(width - 10, height - 10);
+        r2.FarbeSetzen("schwarz");
     }
 }

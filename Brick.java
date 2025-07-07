@@ -15,7 +15,7 @@ public class Brick
         height = heightNew;
         width = widthNew;
         
-        symbol = new BrickSymbol(yPos, yPos, width, height);
+        symbol = new BrickSymbol(width, height);
     }
     
     public int getXPos(){
