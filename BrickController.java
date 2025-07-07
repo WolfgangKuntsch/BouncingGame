@@ -8,13 +8,10 @@ public class BrickController
     private int screenWidth;
     private int screenHeight;
     
-    private int brickWidth = 100;
-    private int brickHeight = 30;
-    
-    public BrickController(int screenWidthNew, int screenHeightNew)
+    public BrickController(int screenWidthNew, int screenHeightNew, Ball ballNew)
     {
         bricks = new ArrayList<Brick>();
-        
+        ball = ballNew;
         screenWidth = screenWidthNew;
         screenHeight = screenHeightNew;
     }
@@ -23,16 +20,18 @@ public class BrickController
         bricks.add(brickNew);
     }
     
-    public void populateGrid(int rows, int columns, int spacing) {
-        if (((screenWidth - ((rows + 1) * spacing) / brickWidth) >= rows) && ((screenHeight - ((columns + 1) * spacing) / brickHeight) >= columns)) {
-            int spacingInbetween = (screenHeight - 2* spacing - rows * brickWidth) / (rows - 1);
-                
-            for (int i = 0; i < columns; i++) {
-                for (int j = 0; j < rows; i++) {
-                    Brick brick = new Brick(spacing + j * (brickWidth + spacingInbetween), spacing + i * (brickHeight + spacingInbetween), brickHeight, brickWidth);
-                    addBrick(brick);
+    public void populateGrid(int brickWidth, int brickHeight, int cols, int rows, int spacing) {
+        if (((screenWidth - ((cols + 1) * spacing) / brickWidth) >= cols) && ((screenHeight - ((rows + 1) * spacing) / brickHeight) >= rows)) {
+            int sideSpacing = (screenWidth - (cols * brickWidth + (cols - 1) * spacing)) / 2;    
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < cols; j++) {
+                    Brick brick = new Brick(sideSpacing + j * (brickWidth + spacing), spacing + i * (brickHeight + spacing), brickHeight, brickWidth);
+                    bricks.add(brick);
                 }
             }
+        }
+        else {
+            System.out.println("too many");
         }
     }
     

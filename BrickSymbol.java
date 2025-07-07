@@ -27,6 +27,7 @@ public class BrickSymbol extends Symbol
         r2.SichtbarkeitSetzen(true);
         r2.PositionSetzen(xPosNew + 5, yPosNew + 5);
         r2.GrößeSetzen(width - 10, height - 10);
-        r2.FarbeSetzen("schwarz");
+        r2.FarbeSetzen("grau");
+        r2.GanzNachVornBringen();
     }
 }

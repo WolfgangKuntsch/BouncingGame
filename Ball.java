@@ -3,7 +3,7 @@ public class Ball extends Figur {
     public Ball(int xPos, int yPos, int radius, int dx, int dy) 
     {super();
         FigurteilFestlegenEllipse(-50, -50, 100, 100, "grau");
-        PositionSetzen(25, 250);
+        PositionSetzen(50, 250);
     }
 
     public int getXPos() {
