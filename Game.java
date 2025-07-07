@@ -26,7 +26,7 @@ public class Game extends Ereignisbehandlung
         super();
         character = new Bat();
         ball = new Ball(0, 0, 20, 0, 0);
-        bricks = new BrickController(Zeichenfenster.MalflächenBreiteGeben(), Zeichenfenster.MalflächenHöheGeben(), ball);
+        bricks = new BrickController(Zeichenfenster.MalflächenBreiteGeben(), Zeichenfenster.MalflächenHöheGeben(), ball, character);
         StartGame();
     }
     

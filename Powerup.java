@@ -1,13 +1,20 @@
 abstract public class Powerup
 {
-    int xPos;
-    int yPos;
-    int speed = 20;
+    private int xPos;
+    private int yPos;
+    private static int speed = 20;
     
-    int radius = 10;
+    protected static int sideLength = 20;
     
-    public Powerup(int xPosNew, int yPosNew)
+    protected PowerupSymbol symbol;
+    
+    public Powerup()
     {
+        xPos = 0;
+        yPos = 0;
+    }
+    
+    public void setPosition (int xPosNew, int yPosNew) {
         xPos = xPosNew;
         yPos = yPosNew;
     }
@@ -16,8 +23,9 @@ abstract public class Powerup
         speed = speedNew;
     }
     
-    public void move() {
+    public void frame() {
         yPos += speed;
+        symbol.draw(xPos, yPos);
     }
     
     public int getXPos() {
@@ -28,8 +36,8 @@ abstract public class Powerup
         return yPos;
     }
     
-    public int getRadius() {
-        return radius;
+    public int getSideLength() {
+        return sideLength;
     }
     
     public void doPowerupEffect() {

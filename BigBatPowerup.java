@@ -2,9 +2,10 @@ public class BigBatPowerup extends Powerup
 {
     private Bat bat;
     
-    public BigBatPowerup(int xPosNew, int yPosNew, Bat batNew)
+    public BigBatPowerup(Bat batNew)
     {
-        super(xPosNew, yPosNew);
+        super();
+        symbol = new PowerupSymbol(sideLength, "gruen", "BigBat");
         bat = batNew;
     }
     
