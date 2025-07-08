@@ -1,7 +1,7 @@
 public class Symbol
 {
-    int xPos;
-    int yPos;
+    protected int xPos;
+    protected int yPos;
     
     public Symbol(){
         xPos = 0;
@@ -10,5 +10,10 @@ public class Symbol
     
     public void draw(int xPosNew, int yPosNew) {
         
+    }
+    
+    public void move(int xPosNew, int yPosNew) {
+        xPos = xPosNew;
+        yPos = yPosNew;
     }
 }
