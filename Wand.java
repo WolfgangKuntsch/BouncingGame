@@ -1,7 +1,4 @@
 public class Wand extends Figur {
-    private Rechteck linkeWand;
-    private Rechteck rechteWand;
-    private Rechteck obereWand;
     private final int WAND_DICKE = 10;
     private int screenWidth;
     private int screenHeight;
