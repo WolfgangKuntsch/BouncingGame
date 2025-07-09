@@ -67,8 +67,7 @@ public class Ball extends Figur {
     public void setScale(float scale) {
         this.scale = scale;
         EigeneFigurLöschen();
-        FigurteilFestlegenEllipse(-getRadius(), -getRadius(), 
-                                 getRadius()*2, getRadius()*2, "rot");
+        FigurteilFestlegenEllipse(-getRadius(), -getRadius(), getRadius()*2, getRadius()*2, "rot");
     }
 
     public void setSpeed(float multiplier) {
