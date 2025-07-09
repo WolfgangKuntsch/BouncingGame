@@ -1,15 +1,23 @@
 public class Bat extends Figur
 {
+    private static final int BAT_WIDTH = 100;
+    private static final int BAT_HEIGHT = 20;
+    private static final int BAT_STEP = 10;
+    private int x = BAT_WIDTH / 2;
+    private int y = Zeichenfenster.MalflächenHöheGeben() - 20;
+    private float scale = 1f;
+    
     public Bat()
     {
         super();
-        FigurteilFestlegenRechteck(0, 0, 100, 20, "grau");
+        draw();
     }
     
     //Größe des Schlägers setzen
-    public void setScale(float scale) { 
-         //EigeneFigurLöschen();
-         //FigurteilFestlegenRechteck(0, 0, , , "grau");
+    public void setScale(float scale) {
+         EigeneFigurLöschen();
+         this.scale = scale;
+         draw();
     }
     
     /*
@@ -22,14 +30,35 @@ public class Bat extends Figur
         {
             // Pfeil nach links
           case 37:
-            WinkelSetzen(180);
-            Gehen(10);
+            Gehen(-BAT_STEP);
+            y -= BAT_STEP;
             break;
             // Pfeil nach rechts
           case 39:
-            WinkelSetzen(0);
-            Gehen(10);
+            Gehen(BAT_STEP);
+            y += BAT_STEP;
             break;
         }
+    }
+    
+    private void draw()
+    {
+        FigurteilFestlegenRechteck(x, y, Math.round(scale * BAT_WIDTH), Math.round(scale * BAT_HEIGHT), "grau");
+    }
+    
+    public int getX() {
+        return x;
+    }
+    
+    public int getY() {
+        return y;
+    }
+    
+    public int getWidth() {
+        return Math.round(scale * BAT_WIDTH);
+    }
+    
+    public int getHeight() {
+        return Math.round(scale * BAT_HEIGHT);
     }
 }
