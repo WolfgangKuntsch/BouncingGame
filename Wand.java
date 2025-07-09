@@ -13,17 +13,17 @@ public class Wand {
         linkeWand = new Rechteck();
         linkeWand.PositionSetzen(WAND_DICKE/2, screenHeight/2);
         linkeWand.GrößeSetzen(WAND_DICKE, screenHeight);
-        linkeWand.FarbeSetzen("grau");
+        linkeWand.FarbeSetzen("blau");
         
         rechteWand = new Rechteck();
         rechteWand.PositionSetzen(screenWidth - WAND_DICKE/2, screenHeight/2);
         rechteWand.GrößeSetzen(WAND_DICKE, screenHeight);
-        rechteWand.FarbeSetzen("grau");
+        rechteWand.FarbeSetzen("blau");
         
         obereWand = new Rechteck();
         obereWand.PositionSetzen(screenWidth/2, WAND_DICKE/2);
         obereWand.GrößeSetzen(screenWidth, WAND_DICKE);
-        obereWand.FarbeSetzen("grau");
+        obereWand.FarbeSetzen("blau");
     }
 
  

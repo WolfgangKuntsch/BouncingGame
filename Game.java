@@ -11,13 +11,13 @@ public class Game extends Ereignisbehandlung
     private Ball ball;
     
     private Background background;
-    private static int BACKGROUND_MIN_STARS = 40;
-    private static int BACKGROUND_MAX_STARS = 60;
+    private static int BACKGROUND_MIN_STARS = 20;
+    private static int BACKGROUND_MAX_STARS = 40;
     private static int BACKGROUND_STAR_MIN_RADIUS = 5;
     private static int BACKGROUND_STAR_MAX_RADIUS = 15;
     private static int BACKGROUND_STAR_MIN_DECAY = 1;
     private static int BACKGROUND_STAR_MAX_DECAY = 2;
-    private static int BACKGROUND_STAR_MIN_DELAY = 1;
+    private static int BACKGROUND_STAR_MIN_DELAY = 5;
     private static int BACKGROUND_STAR_MAX_DELAY = 15;
     
     private BrickController bricks;
@@ -34,7 +34,7 @@ public class Game extends Ereignisbehandlung
     {
         super();
         character = new Bat();
-        ball = new Ball(0, 0, 20, 0, 0);
+        ball = new Ball(10, 10, 20, 10, 10);
         background = new Background(Zeichenfenster.MalflächenBreiteGeben(), Zeichenfenster.MalflächenHöheGeben(), BACKGROUND_MIN_STARS, BACKGROUND_MAX_STARS, BACKGROUND_STAR_MIN_RADIUS, BACKGROUND_STAR_MAX_RADIUS, BACKGROUND_STAR_MIN_DECAY, BACKGROUND_STAR_MAX_DECAY, BACKGROUND_STAR_MIN_DELAY, BACKGROUND_STAR_MAX_DELAY);
         bricks = new BrickController(Zeichenfenster.MalflächenBreiteGeben(), Zeichenfenster.MalflächenHöheGeben(), ball, character);
         StartGame();
@@ -68,10 +68,10 @@ public class Game extends Ereignisbehandlung
     {
         switch (taste)
         {
-            case 81:
+            case 81:        //Taste P
                 PauseGame();
                 break;
-            case 83:
+            case 83:        //Taste R
                 ResumeGame();
                 break;
         }
