@@ -87,9 +87,7 @@ public class BrickController
         bricks.remove(brick);
     }
     private Powerup choosePowerup() {
-        switch (rand.nextInt(0,7)) {
-            case 0:
-                return null;
+        return switch (rand.nextInt(0,7)) {
             case 1:
                 return new FastBallPowerup(ball);
             case 2:
