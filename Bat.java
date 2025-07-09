@@ -14,6 +14,7 @@ public class Bat extends Figur
         super();
         this.x = Zeichenfenster.MalflächenBreiteGeben() - BAT_WIDTH / 2;
         this.y = Zeichenfenster.MalflächenHöheGeben() - 5;
+        PositionSetzen(x, y);
         draw();
     }
     
@@ -33,16 +34,27 @@ public class Bat extends Figur
     {
         switch (taste)
         {
-          case 37:
-            Gehen(-BAT_STEP);
-            x -= BAT_STEP;
-            break;
+            // Pfeil nach links + a
+            case 37:
+            case 65:
+                x -= BAT_STEP;
+                break;
+            // Pfeil nach oben
+            case 38:
+            case 87:
+                y -= BAT_STEP;
+                break;
             // Pfeil nach rechts
-          case 39:
-            Gehen(BAT_STEP);
-            x += BAT_STEP;
-            break;
+            case 39 :
+                x += BAT_STEP;
+                break;
+            // pfeil nach unten
+            case 40 :
+                y += BAT_STEP;
+                break;
         }
+        
+        PositionSetzen(x, y);
     }
     
     public void setAdvancedControls(boolean active) {
@@ -52,7 +64,7 @@ public class Bat extends Figur
     
     private void draw()
     {
-        FigurteilFestlegenRechteck(x, y, width, height, "grau");
+        FigurteilFestlegenRechteck(width / 2, 0, width, height, "grau");
     }
     
     public int getX() {
