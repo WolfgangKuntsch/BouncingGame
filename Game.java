@@ -11,8 +11,8 @@ public class Game extends Ereignisbehandlung
     private Ball ball;
     
     private Background background;
-    private static int BACKGROUND_MIN_STARS = 40;
-    private static int BACKGROUND_MAX_STARS = 60;
+    private static int BACKGROUND_MIN_STARS = 0;
+    private static int BACKGROUND_MAX_STARS = 1;
     private static int BACKGROUND_STAR_MIN_RADIUS = 5;
     private static int BACKGROUND_STAR_MAX_RADIUS = 15;
     private static int BACKGROUND_STAR_MIN_DECAY = 1;
@@ -68,10 +68,10 @@ public class Game extends Ereignisbehandlung
     {
         switch (taste)
         {
-            case 81:
+            case 81:        //Taste P
                 PauseGame();
                 break;
-            case 83:
+            case 83:        //Taste R
                 ResumeGame();
                 break;
         }
