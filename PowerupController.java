@@ -26,7 +26,9 @@ public class PowerupController
     
     //Processes the Powerups, called every frame
     public void frame() {
-        for (Powerup powerup : powerups) {
+        var iter = powerups.iterator();
+        while (iter.hasNext()) {
+            Powerup powerup = iter.next();
             powerup.frame();
             
             // Clear Powerup if it is off screen

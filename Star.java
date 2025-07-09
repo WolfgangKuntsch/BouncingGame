@@ -22,7 +22,6 @@ public class Star extends Symbol {
     public void draw(int xPosNew, int yPosNew) {
         radius -= decay;
         if (radius < 0) radius = 0;
-        System.out.println("Star at (" + xPos + ", " + yPos + ") radius: " + radius);
         c1.RadiusSetzen(radius);
         c1.GanzNachHintenBringen();
         c1.NachVornBringen();

@@ -42,6 +42,7 @@ public class Background {
         r1.GrößeSetzen(screenWidth, screenHeight);
         r1.PositionSetzen(0, 0);
         r1.FarbeSetzen("schwarz");
+        r1.GanzNachVornBringen();
         r1.GanzNachHintenBringen();
 
         stars = new ArrayList<>();

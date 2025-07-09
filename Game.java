@@ -26,8 +26,8 @@ public class Game extends Ereignisbehandlung implements Serializable
     private static int BRICK_WIDTH = 80;
     private static int BRICK_HEIGTH = 20;
     private static int BRICK_SPACING = 20;
-    private static int NUM_COLUMNS = 6;
-    private static int NUM_ROWS = 8;
+    private static int NUM_COLUMNS = 2;
+    private static int NUM_ROWS = 3;
     
     /**
      * Konstruktor für Objekte der Klasse Spiel
@@ -36,7 +36,7 @@ public class Game extends Ereignisbehandlung implements Serializable
     {
         super();
         character = new Bat();
-        ball = new Ball(10, 10, 20, 10, 10);
+        ball = new Ball(10, 20, 20, 10, 0);
         background = new Background(Zeichenfenster.MalflächenBreiteGeben(), Zeichenfenster.MalflächenHöheGeben(), BACKGROUND_MIN_STARS, BACKGROUND_MAX_STARS, BACKGROUND_STAR_MIN_RADIUS, BACKGROUND_STAR_MAX_RADIUS, BACKGROUND_STAR_MIN_DECAY, BACKGROUND_STAR_MAX_DECAY, BACKGROUND_STAR_MIN_DELAY, BACKGROUND_STAR_MAX_DELAY);
         bricks = new BrickController(Zeichenfenster.MalflächenBreiteGeben(), Zeichenfenster.MalflächenHöheGeben(), ball, character);
         new Wand ();
