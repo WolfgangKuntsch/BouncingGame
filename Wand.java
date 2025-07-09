@@ -1,4 +1,4 @@
-public class Wand {
+public class Wand extends Figur {
     private Rechteck linkeWand;
     private Rechteck rechteWand;
     private Rechteck obereWand;
@@ -10,20 +10,17 @@ public class Wand {
         this.screenWidth = Zeichenfenster.MalflächenBreiteGeben();
         this.screenHeight = Zeichenfenster.MalflächenHöheGeben();
         
-        linkeWand = new Rechteck();
-        linkeWand.PositionSetzen(WAND_DICKE/2, screenHeight/2);
-        linkeWand.GrößeSetzen(WAND_DICKE, screenHeight);
-        linkeWand.FarbeSetzen("blau");
+        //linke Wand
+        FigurteilFestlegenRechteck(WAND_DICKE/2, screenHeight/2, WAND_DICKE, screenHeight, "blau");
         
-        rechteWand = new Rechteck();
-        rechteWand.PositionSetzen(screenWidth - WAND_DICKE/2, screenHeight/2);
-        rechteWand.GrößeSetzen(WAND_DICKE, screenHeight);
-        rechteWand.FarbeSetzen("blau");
+        //rechte Wand
+        FigurteilFestlegenRechteck(screenWidth - WAND_DICKE/2, screenHeight/2, WAND_DICKE, screenHeight, "blau");
         
-        obereWand = new Rechteck();
-        obereWand.PositionSetzen(screenWidth/2, WAND_DICKE/2);
-        obereWand.GrößeSetzen(screenWidth, WAND_DICKE);
-        obereWand.FarbeSetzen("blau");
+        //obere Wand
+        FigurteilFestlegenRechteck(screenWidth/2, WAND_DICKE/2, screenWidth, WAND_DICKE, "blau");
+
+        GanzNachVornBringen();
+        
     }
 
  
@@ -51,12 +48,5 @@ public class Wand {
    
     public int getWandDicke() {
         return WAND_DICKE;
-    }
-
-    
-    public void setSichtbarkeit(boolean sichtbar) {
-        linkeWand.SichtbarkeitSetzen(sichtbar);
-        rechteWand.SichtbarkeitSetzen(sichtbar);
-        obereWand.SichtbarkeitSetzen(sichtbar);
     }
 }
