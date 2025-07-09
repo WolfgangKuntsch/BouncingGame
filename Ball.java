@@ -8,17 +8,18 @@ public class Ball extends Figur {
     private boolean verloren;
     private float scale = 1.0f;
 
-    public Ball(int xPos, int yPos, int radius, float dx, float dy) {
+    public Ball(int xPos, int yPos, int radius, float dxNew, float dyNew) {
         super();
         this.radius = radius;
-        this.dx = dx;
-        this.dy = dy;
+        this.dx = dxNew;
+        this.dy = dyNew;
         this.startX = xPos;
         this.startY = yPos;
         this.verloren = false;
         
         FigurteilFestlegenEllipse(-radius, -radius, radius*2, radius*2, "rot");
         PositionSetzen(xPos, yPos);
+        GanzNachVornBringen();
     }
 
     public void bewegen() {
