@@ -50,22 +50,27 @@ public class BrickController
     public void frame() {
         //move the powerups
         powerups.frame();
-        for (Brick brick : bricks) {
+        var iter = bricks.iterator();
+        while (iter.hasNext()) {
+            Brick brick = iter.next();
             // draw the brick
             brick.draw();
-            
             // collision between Ball and Brick
             switch (CustomMath.CircleRectangleCollision(ball.getXPos(), ball.getYPos(), ball.getRadius(), brick.getXPos(), brick.getYPos(), brick.getHeight(), brick.getWidth())) {
                 case 1: // Top
                 case 2: // Bottom
                     ball.reflectY();
+                    iter.remove();
                     breakBrick(brick);
+                    //iter.remove();
                     break;
             
                 case 3: // Left
                 case 4: // Right
                     ball.reflectX();
+                    iter.remove();
                     breakBrick(brick);
+                    //iter.remove();
                     break;
             
                 case 5: // Top-left
@@ -74,7 +79,9 @@ public class BrickController
                 case 8: // Bottom-right
                     ball.reflectX();
                     ball.reflectY();
+                    iter.remove();
                     breakBrick(brick);
+                    
                     break;
             }
         }
@@ -83,7 +90,7 @@ public class BrickController
         Powerup powerup = choosePowerup();
         powerup.setPosition(brick.getXPos(), brick.getYPos());
         powerups.addPowerup(powerup);
-        
+        System.out.println("break");
         bricks.remove(brick);
     }
     private Powerup choosePowerup() {
