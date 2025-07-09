@@ -37,4 +37,8 @@ public class Brick
     public void draw() {
         symbol.draw(xPos, yPos);
     }
+    
+    public void remove() {
+        
+    }
 }
