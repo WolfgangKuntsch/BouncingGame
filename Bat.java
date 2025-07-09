@@ -12,8 +12,8 @@ public class Bat extends Figur
     public Bat()
     {
         super();
-        this.x = Zeichenfenster.MalflächenBreiteGeben() - BAT_WIDTH / 2;
-        this.y = Zeichenfenster.MalflächenHöheGeben() - 5;
+        this.x = Zeichenfenster.MalflächenBreiteGeben() / 2;
+        this.y = Zeichenfenster.MalflächenHöheGeben() - 20;
         PositionSetzen(x, y);
         draw();
     }
