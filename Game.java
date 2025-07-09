@@ -43,7 +43,8 @@ public class Game extends Ereignisbehandlung
     @Override void TaktImpulsAusführen()
     {
         background.frame();
-        bricks.frame();       
+        bricks.frame();
+        ball.bewegen();
     }
     
     void StartGame() 
@@ -53,10 +54,26 @@ public class Game extends Ereignisbehandlung
         Starten();    
     }
     
-    
-    
-    void KollisionPrüfen() 
+    void PauseGame()
     {
-        
+        Anhalten();
+    }
+    
+    void ResumeGame() 
+    {
+        Starten();    
+    }
+    
+    @Override void SonderTasteGedrückt (int taste)
+    {
+        switch (taste)
+        {
+            case 81:
+                PauseGame();
+                break;
+            case 83:
+                ResumeGame();
+                break;
+        }
     }
 }
