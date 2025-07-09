@@ -5,7 +5,7 @@ public class SmallBatPowerup extends Powerup
     public SmallBatPowerup(Bat batNew)
     {
         super();
-        symbol = new PowerupSymbol(sideLength, "rot", "SmallBat");
+        symbol = new PowerupSymbol(radius, "rot", "SmallBat");
         bat = batNew;
     }
     

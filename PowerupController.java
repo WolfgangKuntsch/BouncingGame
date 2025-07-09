@@ -30,12 +30,12 @@ public class PowerupController
             powerup.frame();
             
             // Clear Powerup if it is off screen
-            if ((powerup.getYPos() + powerup.getSideLength() + 10) > screenHeight) {
+            if ((powerup.getYPos() + powerup.getRadius() + 10) > screenHeight) {
                 powerups.remove(powerup);
             }
             
             //Collision between Ball and Powerup --> triggers the Powerup effect
-            if (CustomMath.collisionBetweenCircles(ball.getXPos(), ball.getYPos(), ball.getRadius(), powerup.getXPos(), powerup.getYPos(), powerup.getSideLength())) {
+            if (CustomMath.CircleRectangleCollision(powerup.getXPos(), powerup.getYPos(), powerup.getRadius(), bat.getX(), bat.getY(), bat.getHeigth(), bat.getWidth()) > 0) {
                 clearPowerupEffects();
                 powerup.doPowerupEffect();
                 powerups.remove(powerup);
