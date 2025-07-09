@@ -1,40 +1,81 @@
 public class Ball extends Figur {
+    private int radius;
+    private float dx;
+    private float dy;
+    private float speedMultiplier = 1.0f;
+    private int startX;
+    private int startY;
+    private boolean verloren;
+    private float scale = 1.0f;
 
-    public Ball(int xPos, int yPos, int radius, int dx, int dy) {
+    public Ball(int xPos, int yPos, int radius, float dx, float dy) {
         super();
-        FigurteilFestlegenEllipse(-50, -50, 100, 100, "grau");
-        PositionSetzen(50, 250);
+        this.radius = radius;
+        this.dx = dx;
+        this.dy = dy;
+        this.startX = xPos;
+        this.startY = yPos;
+        this.verloren = false;
+        
+        FigurteilFestlegenEllipse(-radius, -radius, radius*2, radius*2, "rot");
+        PositionSetzen(xPos, yPos);
+    }
+
+    public void bewegen() {
+        if (!verloren) {
+            PositionSetzen((int)(XPositionGeben() + dx * speedMultiplier), 
+                         (int)(YPositionGeben() + dy * speedMultiplier));
+        }
     }
 
     public int getXPos() {
-        return 0;
+        return XPositionGeben();
     }
 
     public int getYPos() {
-        return 0;
+        return YPositionGeben();
     }
 
     public int getRadius() {
-        return 0;
-    }
-    
-    // Bewegung in X-Richtung umdrehen
-    public void reflectX() {
-        WinkelSetzen(180 - WinkelGeben());
+        return (int)(radius * scale);
     }
 
-    // Bewegung in Y-Richtung umdrehen
+    public void reflectX() {
+        dx = -dx;
+    }
+
     public void reflectY() {
-        WinkelSetzen(-WinkelGeben());
+        dy = -dy;
     }
-    
-    //Größe des Balles setzen
-    public void setScale(float scale) { 
-         
+
+    public boolean istVerloren() {
+        return verloren;
     }
-    
-    //Geschwindigkeit des Balles setzen
-    public void setSpeed(float speef) { 
-         
+
+    public void setVerloren(boolean status) {
+        verloren = status;
+    }
+
+    public void reset() {
+        PositionSetzen(startX, startY);
+        verloren = false;
+        dx = Math.abs(dx); 
+        dy = -Math.abs(dy); 
+    }
+
+    public void setScale(float scale) {
+        this.scale = scale;
+        EigeneFigurLöschen();
+        FigurteilFestlegenEllipse(-getRadius(), -getRadius(), 
+                                 getRadius()*2, getRadius()*2, "rot");
+    }
+
+    public void setSpeed(float multiplier) {
+        this.speedMultiplier = multiplier;
+    }
+
+    public void setDirection(float dx, float dy) {
+        this.dx = dx;
+        this.dy = dy;
     }
 }
