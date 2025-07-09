@@ -47,7 +47,7 @@ public class Background {
         stars = new ArrayList<>();
         pendingSpawns = new ArrayList<>();
 
-        int starCount = rand.nextInt(minStars, maxStars + 1);
+        int starCount = rand.nextInt(maxStars + 1) + minStars;
         for (int i = 0; i < starCount; i++) {
             stars.add(createRandomStar());
         }
