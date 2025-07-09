@@ -11,13 +11,13 @@ public class Game extends Ereignisbehandlung
     private Ball ball;
     
     private Background background;
-    private static int BACKGROUND_MIN_STARS = 0;
-    private static int BACKGROUND_MAX_STARS = 1;
+    private static int BACKGROUND_MIN_STARS = 20;
+    private static int BACKGROUND_MAX_STARS = 40;
     private static int BACKGROUND_STAR_MIN_RADIUS = 5;
     private static int BACKGROUND_STAR_MAX_RADIUS = 15;
     private static int BACKGROUND_STAR_MIN_DECAY = 1;
     private static int BACKGROUND_STAR_MAX_DECAY = 2;
-    private static int BACKGROUND_STAR_MIN_DELAY = 1;
+    private static int BACKGROUND_STAR_MIN_DELAY = 5;
     private static int BACKGROUND_STAR_MAX_DELAY = 15;
     
     private BrickController bricks;
