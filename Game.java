@@ -1,12 +1,14 @@
-
+import java.io.*;
 /**
  * Beschreiben Sie hier die Klasse Spiel.
  * 
  * @author (Ihr Name) 
  * @version (eine Versionsnummer oder ein Datum)
  */
-public class Game extends Ereignisbehandlung
+public class Game extends Ereignisbehandlung implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+    
     private Bat character;
     private Ball ball;
     
@@ -41,6 +43,26 @@ public class Game extends Ereignisbehandlung
         StartGame();
     }
     
+    public void saveGame(String filename) {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
+            out.writeObject(this);
+            System.out.println("Game saved successfully!");
+        } catch (IOException e) {
+            System.out.println("Error saving game: " + e.getMessage());
+        }
+    }
+    
+     public static Game loadGame(String filename) {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
+            Game loadedGame = (Game) in.readObject();
+            System.out.println("Game loaded successfully!");
+            return loadedGame;
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error loading game: " + e.getMessage());
+            return null;
+        }
+    }
+    
     @Override void TaktImpulsAusführen()
     {
         background.frame();
@@ -69,12 +91,16 @@ public class Game extends Ereignisbehandlung
     {
         switch (taste)
         {
-            case 81:        //Taste P
+            case 80:        //Taste P
                 PauseGame();
                 break;
-            case 83:        //Taste R
+            case 82:        //Taste R
                 ResumeGame();
                 break;
         }
     }
+    
+    //public static String serialize (GameState state);
+    
+    //static GameState deserialize (String customFormat);
 }
