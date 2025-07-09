@@ -1,12 +1,14 @@
-
+import java.io.*;
 /**
  * Beschreiben Sie hier die Klasse Spiel.
  * 
  * @author (Ihr Name) 
  * @version (eine Versionsnummer oder ein Datum)
  */
-public class Game extends Ereignisbehandlung
+public class Game extends Ereignisbehandlung implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+    
     private Bat character;
     private Ball ball;
     
@@ -38,6 +40,26 @@ public class Game extends Ereignisbehandlung
         background = new Background(Zeichenfenster.MalflächenBreiteGeben(), Zeichenfenster.MalflächenHöheGeben(), BACKGROUND_MIN_STARS, BACKGROUND_MAX_STARS, BACKGROUND_STAR_MIN_RADIUS, BACKGROUND_STAR_MAX_RADIUS, BACKGROUND_STAR_MIN_DECAY, BACKGROUND_STAR_MAX_DECAY, BACKGROUND_STAR_MIN_DELAY, BACKGROUND_STAR_MAX_DELAY);
         bricks = new BrickController(Zeichenfenster.MalflächenBreiteGeben(), Zeichenfenster.MalflächenHöheGeben(), ball, character);
         StartGame();
+    }
+    
+    public void saveGame(String filename) {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
+            out.writeObject(this);
+            System.out.println("Game saved successfully!");
+        } catch (IOException e) {
+            System.out.println("Error saving game: " + e.getMessage());
+        }
+    }
+    
+     public static Game loadGame(String filename) {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
+            Game loadedGame = (Game) in.readObject();
+            System.out.println("Game loaded successfully!");
+            return loadedGame;
+        } catch (IOException | ClassNotFoundException e) {
+            System.out.println("Error loading game: " + e.getMessage());
+            return null;
+        }
     }
     
     @Override void TaktImpulsAusführen()
@@ -76,4 +98,8 @@ public class Game extends Ereignisbehandlung
                 break;
         }
     }
+    
+    //public static String serialize (GameState state);
+    
+    //static GameState deserialize (String customFormat);
 }
