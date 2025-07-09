@@ -90,10 +90,10 @@ public class Game extends Ereignisbehandlung implements Serializable
     {
         switch (taste)
         {
-            case 81:        //Taste P
+            case 80:        //Taste P
                 PauseGame();
                 break;
-            case 83:        //Taste R
+            case 82:        //Taste R
                 ResumeGame();
                 break;
         }
