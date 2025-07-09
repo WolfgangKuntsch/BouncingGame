@@ -2,9 +2,9 @@ public class SmallBallPowerup extends Powerup
 {
     private Ball ball;
     
-    public SmallBallPowerup(Ball ballNew)
+    public SmallBallPowerup(int radiusNew, int speedNew, Ball ballNew)
     {
-        super();
+        super(radiusNew, speedNew);
         symbol = new PowerupSymbol(radius, "rot", "SmallBall");
         ball = ballNew;
     }

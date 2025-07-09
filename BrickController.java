@@ -13,8 +13,7 @@ public class BrickController
     private PowerupController powerups;
     
     private Random rand;
-    
-    public BrickController(int screenWidthNew, int screenHeightNew, Ball ballNew, Bat batNew)
+    public BrickController(int screenWidthNew, int screenHeightNew, Ball ballNew, Bat batNew, PowerupController powerupControllerNew)
     {
         bricks = new ArrayList<Brick>();
         ball = ballNew;
@@ -25,7 +24,7 @@ public class BrickController
         
         rand = new Random();
         
-        powerups = new PowerupController(screenWidth, screenHeight, ball, bat);
+        powerups = powerupControllerNew;
     }
     
     public void addBrick(Brick brickNew) {
@@ -43,7 +42,7 @@ public class BrickController
             }
         }
         else {
-            System.out.println("too many");
+            throw new IndexOutOfBoundsException("Too many rows or columns to fit on screen");
         }
     }
     
@@ -77,8 +76,9 @@ public class BrickController
                 case 6: // Top-right
                 case 7: // Bottom-left
                 case 8: // Bottom-right
-                    ball.reflectX();
-                    ball.reflectY();
+                    int dx =  (int) (0.1 * (ball.getXPos() - (brick.getXPos() + brick.getWidth()/2)));
+                    int dy =  (int) (0.1 * (ball.getYPos() - (brick.getYPos() + brick.getHeight()/2)));
+                    ball.setDirection(dx, dy);
                     iter.remove();
                     breakBrick(brick);
                     
@@ -87,28 +87,12 @@ public class BrickController
         }
     }
     private void breakBrick(Brick brick) {
-        Powerup powerup = choosePowerup();
-        powerup.setPosition(brick.getXPos(), brick.getYPos());
-        powerups.addPowerup(powerup);
-        System.out.println("break");
-        bricks.remove(brick);
-    }
-    private Powerup choosePowerup() {
-        switch (rand.nextInt(7)) {
-            case 1:
-                return new FastBallPowerup(ball);
-            case 2:
-                return new SlowBallPowerup(ball);
-            case 3:
-                return new SmallBallPowerup(ball);
-            case 4:
-                return new BigBallPowerup(ball);
-            case 5:
-                return new SmallBatPowerup(bat);
-            case 6:
-                return new BigBatPowerup(bat);
-            default:
-                return null;
+        Powerup powerup = powerups.choosePowerup();
+        if (powerup != null) {
+            powerup.setPosition(brick.getXPos(), brick.getYPos());
+            powerups.addPowerup(powerup); 
         }
+        brick.remove();
+        bricks.remove(brick);
     }
 }

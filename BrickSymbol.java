@@ -30,4 +30,9 @@ public class BrickSymbol extends Symbol
         r2.FarbeSetzen("weiss");
         r2.GanzNachVornBringen();
     }
+    
+    public void remove() {
+        r1.Entfernen();
+        r2.Entfernen();
+    }
 }

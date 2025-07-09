@@ -59,7 +59,7 @@ public class Bat extends Figur
     
     public void setAdvancedControls(boolean active) {
         this.advancedControls = active;
-        throw new UnsupportedOperationException("Not Yet Implemented");
+        // throw new UnsupportedOperationException("Not Yet Implemented");
     }
     
     private void draw()

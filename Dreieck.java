@@ -1,4 +1,3 @@
-
 /**
  * Wrapperklasse für ein Dreieck auf der Zeichenfläche.
  * 

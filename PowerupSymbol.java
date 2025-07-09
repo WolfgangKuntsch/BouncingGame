@@ -17,12 +17,12 @@ public class PowerupSymbol extends Symbol
         c1 = new Kreis();
         c1.RadiusSetzen(radius);
         c1.FarbeSetzen(color);
-        c1.GanzNachHintenBringen();
         c1.SichtbarkeitSetzen(false);
         
         t1 = new Text();
         t1.TextSetzen(text);
         t1.TextGrößeSetzen(radius);
+        t1.FarbeSetzen("weiss");
         t1.SichtbarkeitSetzen(false);
     }
     
@@ -30,9 +30,12 @@ public class PowerupSymbol extends Symbol
         c1.PositionSetzen(xPos, yPos);
         c1.SichtbarkeitSetzen(true);
         
-        t1.PositionSetzen(xPos - radius, yPos + radius);
+        t1.PositionSetzen(xPos - radius, yPos + 2 * radius);
         t1.SichtbarkeitSetzen(true);
     }
     
-    
+    public void remove() {
+        c1.Entfernen();
+        t1.Entfernen();
+    }
 }

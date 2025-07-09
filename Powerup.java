@@ -2,16 +2,19 @@ abstract public class Powerup
 {
     private int xPos;
     private int yPos;
-    private static int speed = 20;
+    private static int speed = 5;
     
     protected static int radius = 10;
     
     protected PowerupSymbol symbol;
     
-    public Powerup()
+    public Powerup(int radiusNew, int speedNew)
     {
         xPos = 0;
         yPos = 0;
+        
+        radius = radiusNew;
+        speed = speedNew;
     }
     
     public void setPosition (int xPosNew, int yPosNew) {
@@ -42,5 +45,9 @@ abstract public class Powerup
     
     public void doPowerupEffect() {
         
+    }
+    
+    public void remove() {
+        symbol.remove();
     }
 }

@@ -39,6 +39,6 @@ public class Brick
     }
     
     public void remove() {
-        
+        symbol.remove();
     }
 }

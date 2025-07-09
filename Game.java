@@ -13,8 +13,8 @@ public class Game extends Ereignisbehandlung implements Serializable
     private Ball ball;
     
     private Background background;
-    private static int BACKGROUND_MIN_STARS = 20;
-    private static int BACKGROUND_MAX_STARS = 40;
+    private static int BACKGROUND_MIN_STARS = 1;
+    private static int BACKGROUND_MAX_STARS = 1;
     private static int BACKGROUND_STAR_MIN_RADIUS = 5;
     private static int BACKGROUND_STAR_MAX_RADIUS = 15;
     private static int BACKGROUND_STAR_MIN_DECAY = 1;
@@ -25,10 +25,12 @@ public class Game extends Ereignisbehandlung implements Serializable
     private BrickController bricks;
     private static int BRICK_WIDTH = 80;
     private static int BRICK_HEIGTH = 20;
-    private static int BRICK_SPACING = 20;
-    private static int NUM_COLUMNS = 2;
-    private static int NUM_ROWS = 3;
+    private static int BRICK_SPACING = 30;
+    private static int NUM_COLUMNS = 6;
+    private static int NUM_ROWS = 5;
     
+    private static int POWERUP_RADIUS = 10;
+    private static int POWERUP_SPEED = 2;
     /**
      * Konstruktor für Objekte der Klasse Spiel
      */
@@ -36,9 +38,12 @@ public class Game extends Ereignisbehandlung implements Serializable
     {
         super();
         character = new Bat();
-        ball = new Ball(10, 20, 20, 10, 0);
-        background = new Background(Zeichenfenster.MalflächenBreiteGeben(), Zeichenfenster.MalflächenHöheGeben(), BACKGROUND_MIN_STARS, BACKGROUND_MAX_STARS, BACKGROUND_STAR_MIN_RADIUS, BACKGROUND_STAR_MAX_RADIUS, BACKGROUND_STAR_MIN_DECAY, BACKGROUND_STAR_MAX_DECAY, BACKGROUND_STAR_MIN_DELAY, BACKGROUND_STAR_MAX_DELAY);
-        bricks = new BrickController(Zeichenfenster.MalflächenBreiteGeben(), Zeichenfenster.MalflächenHöheGeben(), ball, character);
+        ball = new Ball(400, 240, 20, 3, 1);
+        int screenWidth = Zeichenfenster.MalflächenBreiteGeben();
+        int screenHeight = Zeichenfenster.MalflächenHöheGeben();
+        
+        background = new Background(screenWidth, screenHeight, BACKGROUND_MIN_STARS, BACKGROUND_MAX_STARS, BACKGROUND_STAR_MIN_RADIUS, BACKGROUND_STAR_MAX_RADIUS, BACKGROUND_STAR_MIN_DECAY, BACKGROUND_STAR_MAX_DECAY, BACKGROUND_STAR_MIN_DELAY, BACKGROUND_STAR_MAX_DELAY);
+        bricks = new BrickController(screenWidth, screenHeight, ball, character, new PowerupController(screenWidth, screenHeight, ball, character, POWERUP_RADIUS, POWERUP_SPEED));
         new Wand ();
         StartGame();
     }
@@ -72,7 +77,7 @@ public class Game extends Ereignisbehandlung implements Serializable
     
     void StartGame() 
     {
-        TaktdauerSetzen(100);
+        TaktdauerSetzen(20);
         bricks.populateGrid(BRICK_WIDTH, BRICK_HEIGTH, NUM_COLUMNS, NUM_ROWS, BRICK_SPACING);
         Starten();    
     }
