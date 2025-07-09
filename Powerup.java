@@ -4,7 +4,7 @@ abstract public class Powerup
     private int yPos;
     private static int speed = 20;
     
-    protected static int sideLength = 20;
+    protected static int radius = 10;
     
     protected PowerupSymbol symbol;
     
@@ -36,8 +36,8 @@ abstract public class Powerup
         return yPos;
     }
     
-    public int getSideLength() {
-        return sideLength;
+    public int getRadius() {
+        return radius;
     }
     
     public void doPowerupEffect() {
