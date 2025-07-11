@@ -7,7 +7,7 @@ public class Bat extends Figur
     private int y;
     private int width = BAT_WIDTH;
     private int height = BAT_HEIGHT;
-    private boolean advancedControls = false;
+    private boolean advancedControls;
     
     public Bat()
     {
@@ -42,14 +42,18 @@ public class Bat extends Figur
             // Pfeil nach oben
             case 38:
             case 87:
+                if (!advancedControls) break;
                 y -= BAT_STEP;
                 break;
             // Pfeil nach rechts
-            case 39 :
+            case 39:
+            case 68:
                 x += BAT_STEP;
                 break;
             // pfeil nach unten
-            case 40 :
+            case 40:
+            case 83:
+                if (!advancedControls) break;
                 y += BAT_STEP;
                 break;
         }
@@ -58,8 +62,7 @@ public class Bat extends Figur
     }
     
     public void setAdvancedControls(boolean active) {
-        this.advancedControls = active;
-        // throw new UnsupportedOperationException("Not Yet Implemented");
+        advancedControls = active;
     }
     
     private void draw()
