@@ -92,18 +92,35 @@ public class Game extends Ereignisbehandlung implements Serializable
         Starten();    
     }
     
-    @Override void SonderTasteGedrückt (int taste)
+    @Override void TasteGedrückt (char taste)
     {
         switch (taste)
         {
-            case 80:        //Taste P
+            case 'p':        //Taste P
                 PauseGame();
+                System.out.println("Pause");
                 break;
-            case 82:        //Taste R
+            case 'r':        //Taste R
                 ResumeGame();
+                System.out.println("Resume");
                 break;
         }
     }
+    
+    // @Override void SonderTasteGedrückt (int taste)
+    // {
+        // switch (taste)
+        // {
+            // case 80:        //Taste P
+                // PauseGame();
+                // System.out.println("Pause");
+                // break;
+            // case 82:        //Taste R
+                // ResumeGame();
+                // System.out.println("Resume");
+                // break;
+        // }
+    // }
     
     //public static String serialize (GameState state);
     
