@@ -74,7 +74,7 @@ public class PowerupController
     }
     
     public Powerup choosePowerup() {
-        switch (rand.nextInt(8)) {
+        switch (rand.nextInt(35)) {
             case 1:
                 return new FastBallPowerup(powerupRadius, powerupSpeed, ball);
             case 2:

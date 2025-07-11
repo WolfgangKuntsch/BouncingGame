@@ -31,6 +31,8 @@ public class Game extends Ereignisbehandlung implements Serializable
     
     private static int POWERUP_RADIUS = 10;
     private static int POWERUP_SPEED = 2;
+    
+    private WinScreen win;
     /**
      * Konstruktor für Objekte der Klasse Spiel
      */
@@ -38,7 +40,10 @@ public class Game extends Ereignisbehandlung implements Serializable
     {
         super();
         character = new Bat();
-        ball = new Ball(400, 240, 20, 3, 1);
+        ball = new Ball(400, 140, 20, 3, 1);
+        
+        win = new WinScreen();
+        
         int screenWidth = Zeichenfenster.MalflächenBreiteGeben();
         int screenHeight = Zeichenfenster.MalflächenHöheGeben();
         
@@ -73,6 +78,9 @@ public class Game extends Ereignisbehandlung implements Serializable
         background.frame();
         bricks.frame();
         ball.bewegen();
+        if (bricks.getBrickCount() == 0) {
+            win.draw(0,0);
+        }
     }
     
     void StartGame() 
