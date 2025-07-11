@@ -95,4 +95,8 @@ public class BrickController
         brick.remove();
         bricks.remove(brick);
     }
+    
+    public int getBrickCount () {
+        return bricks.size();
+    }
 }

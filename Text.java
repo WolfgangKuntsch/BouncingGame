@@ -1,4 +1,4 @@
-
+import java.awt.Color;
 /**
  * Wrapperklasse für einen Text auf der Zeichenfläche.
  * 
@@ -126,6 +126,11 @@ public class Text
     {
         this.farbe = farbe;
         symbol.FarbeSetzen(farbe);
+    }
+    
+    void FarbeSetzen (int r,int g,int b)
+    {
+      symbol.FarbeSetzen(new Color(r,g,b));  
     }
         
     /**

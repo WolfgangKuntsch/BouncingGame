@@ -1,4 +1,3 @@
-
 import java.awt.*;
 import java.awt.geom.*;
 import java.awt.event.*;
@@ -58,7 +57,7 @@ class Zeichenfenster
     {
         alleSymbole = new ArrayList<GrafikSymbol>();
         aktionsEmpfänger = new ArrayList<AktionsEmpfaenger>();
-        fenster = new JFrame("Zeichenfenster");
+        fenster = new JFrame("Bouncing Game");
         fenster.setLocation(50, 50);
         fenster.setSize(800, 600);
         fenster.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE); //Close-Button kann nicht versteckt oder abgestellt werden.
@@ -218,6 +217,7 @@ class Zeichenfenster
         }
         );
         panel.add(slider);
+        panel.setVisible(false); 
         
         fenster.add(panel, BorderLayout.SOUTH);
         fenster.setVisible(true);
