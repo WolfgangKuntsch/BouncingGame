@@ -60,7 +60,7 @@ class Zeichenfenster
         fenster = new JFrame("Bouncing Game");
         fenster.setLocation(50, 50);
         fenster.setSize(800, 600);
-        fenster.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE); //Close-Button kann nicht versteckt oder abgestellt werden.
+        //fenster.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE); //Close-Button kann nicht versteckt oder abgestellt werden.
         fenster.setResizable(false);
         
         malfläche = new JComponent()

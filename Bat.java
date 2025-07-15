@@ -8,10 +8,13 @@ public class Bat extends Figur
     private int width = BAT_WIDTH;
     private int height = BAT_HEIGHT;
     private boolean advancedControls;
+    private Ball ball;
     
-    public Bat()
+    public Bat(Ball ballNew)
     {
         super();
+        ball = ballNew;
+        
         this.x = Zeichenfenster.MalflächenBreiteGeben() / 2;
         this.y = Zeichenfenster.MalflächenHöheGeben() - 20;
         PositionSetzen(x, y);
@@ -85,8 +88,7 @@ public class Bat extends Figur
         FigurteilFestlegenRechteck(-(width / 2), 0, width, height, "grau");
     }
     
-    private void checkCollisions() {
-        /*
+    public void checkCollisions() {
         switch (CustomMath.CircleRectangleCollision(ball.getXPos(), ball.getYPos(), ball.getRadius(), x, y, height, width)) {
                 case 1: // Top
                 case 2: // Bottom
@@ -102,13 +104,12 @@ public class Bat extends Figur
                 case 6: // Top-right
                 case 7: // Bottom-left
                 case 8: // Bottom-right
-                    int dx =  (int) (0.1 * (ball.getXPos() - (brick.getXPos() + brick.getWidth()/2)));
-                    int dy =  (int) (0.1 * (ball.getYPos() - (brick.getYPos() + brick.getHeight()/2)));
+                    int dx =  (int) (0.1 * (ball.getXPos() - (x + width/2)));
+                    int dy =  (int) (0.1 * (ball.getYPos() - (x + height/2)));
                     ball.setDirection(dx, dy);
                     
                     break;
             }
-        */
     }
     
     @Deprecated(forRemoval=true)

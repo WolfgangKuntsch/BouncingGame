@@ -39,8 +39,8 @@ public class Game extends Ereignisbehandlung implements Serializable
     public Game()
     {
         super();
-        character = new Bat();
-        ball = new Ball(400, 140, 20, 3, 1);
+        ball = new Ball(390, 340, 20, 0, 3);
+        character = new Bat(ball);
         
         win = new WinScreen();
         
@@ -77,10 +77,12 @@ public class Game extends Ereignisbehandlung implements Serializable
     {
         background.frame();
         bricks.frame();
+        character.checkCollisions();
         ball.bewegen();
-        if (bricks.getBrickCount() == 0) {
+        
+        //if (bricks.getBrickCount() == 0) {
             win.draw(0,0);
-        }
+        //}
     }
     
     void StartGame() 
