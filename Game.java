@@ -1,4 +1,7 @@
 import java.io.*;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+
 /**
  * Beschreiben Sie hier die Klasse Spiel.
  * 
@@ -54,30 +57,54 @@ public class Game extends Ereignisbehandlung implements Serializable
         
         background = new Background(screenWidth, screenHeight, BACKGROUND_MIN_STARS, BACKGROUND_MAX_STARS, BACKGROUND_STAR_MIN_RADIUS, BACKGROUND_STAR_MAX_RADIUS, BACKGROUND_STAR_MIN_DECAY, BACKGROUND_STAR_MAX_DECAY, BACKGROUND_STAR_MIN_DELAY, BACKGROUND_STAR_MAX_DELAY);
         bricks = new BrickController(screenWidth, screenHeight, ball, character, new PowerupController(screenWidth, screenHeight, ball, character, POWERUP_RADIUS, POWERUP_SPEED));
-        new Wand ();
         running = false;
         StartGame();
     }
     
-    public void saveGame(String filename) {
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
-            out.writeObject(this);
-            System.out.println("Game saved successfully!");
-        } catch (IOException e) {
-            System.out.println("Error saving game: " + e.getMessage());
-        }
-    }
+    // public void saveGame(String filename) {
+        // try 
+        // //(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) 
+        // {
+            // FileOutputStream  fileOut = new FileOutputStream(filename);
+            // ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            // out.writeObject(this);
+            // out.close();
+            // fileOut.close();
+            // System.out.println("Game saved successfully!");
+        // } 
+        // catch (IOException e) 
+        // {
+            // System.out.println("Error saving game: " + e.getMessage());
+        // }
+    // }
     
-     public static Game loadGame(String filename) {
-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
-            Game loadedGame = (Game) in.readObject();
-            System.out.println("Game loaded successfully!");
-            return loadedGame;
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error loading game: " + e.getMessage());
-            return null;
-        }
-    }
+     // public static Game loadGame(String filename) 
+     // {
+        // System.out.println("loading from" + filename);
+         // try 
+         // //(ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) 
+        // {
+            // FileInputStream fileIn = new FileInputStream(filename);
+            // ObjectInputStream in = new ObjectInputStream(fileIn);
+            // this = in.readObject();
+            // in.close();
+            // fileIn.close();
+            // // Game loadedGame = (Game) in.readObject();
+            // // System.out.println("Game loaded successfully!");
+            // // return loadedGame;
+        // } 
+        // catch (IOException i)
+        // {
+            // i.printStackTrace();
+            // return null;
+        // }
+        // catch (ClassNotFoundException c)
+        // {
+            // System.out.println("Error loading game: " + c.getMessage());
+            // c.printStackTrace();
+            // return null;
+        // }
+        // }
     
     @Override void TaktImpulsAusführen()
     {
@@ -111,18 +138,35 @@ public class Game extends Ereignisbehandlung implements Serializable
         Starten();    
     }
     
-    @Override void SonderTasteGedrückt (int taste)
+    @Override void TasteGedrückt (char taste)
     {
         switch (taste)
         {
-            case 80:        //Taste P
+            case 'p':        //Taste P
                 PauseGame();
+                System.out.println("Pause");
                 break;
-            case 82:        //Taste R
+            case 'r':        //Taste R
                 ResumeGame();
+                System.out.println("Resume");
                 break;
         }
     }
+    
+    // @Override void SonderTasteGedrückt (int taste)
+    // {
+        // switch (taste)
+        // {
+            // case 80:        //Taste P
+                // PauseGame();
+                // System.out.println("Pause");
+                // break;
+            // case 82:        //Taste R
+                // ResumeGame();
+                // System.out.println("Resume");
+                // break;
+        // }
+    // }
     
     //public static String serialize (GameState state);
     
