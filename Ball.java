@@ -23,6 +23,7 @@ public class Ball extends Figur {
     }
 
     public void bewegen() {
+        
         if (!verloren) {
             PositionSetzen((int)(XPositionGeben() + dx * speedMultiplier), 
                          (int)(YPositionGeben() + dy * speedMultiplier));
