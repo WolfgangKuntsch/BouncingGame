@@ -112,16 +112,6 @@ public class Bat extends Figur
             }
     }
     
-    @Deprecated(forRemoval=true)
-    public int getX() {
-        return x;
-    }
-    
-    @Deprecated(forRemoval=true)
-    public int getY() {
-        return y;
-    }
-    
     public int getWidth() {
         return width;
     }
