@@ -118,4 +118,8 @@ public class Game extends Ereignisbehandlung implements Serializable
     //public static String serialize (GameState state);
     
     //static GameState deserialize (String customFormat);
+    
+    public static final void main() {
+        new Game();
+    }
 }
