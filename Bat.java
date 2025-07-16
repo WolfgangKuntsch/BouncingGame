@@ -89,7 +89,7 @@ public class Bat extends Figur
     }
     
     public void checkCollisions() {
-        switch (CustomMath.CircleRectangleCollision(ball.getXPos(), ball.getYPos(), ball.getRadius(), x, y, height, width)) {
+        switch (CustomMath.CircleRectangleCollision(ball.getXPos(), ball.getYPos(), ball.getRadius(), x - (width / 2), y, height - (height / 2), width)) {
                 case 1: // Top
                 case 2: // Bottom
                     ball.reflectY();
