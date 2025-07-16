@@ -43,6 +43,9 @@ public class Game extends Ereignisbehandlung implements Serializable
         ball = new Ball(390, 140, 20, 0, 3);
         character = new Bat(ball);
         
+        new SideWalls();
+        new UpperWall();
+        
         win = new WinScreen();
         
         int screenWidth = Zeichenfenster.MalflächenBreiteGeben();
@@ -52,6 +55,7 @@ public class Game extends Ereignisbehandlung implements Serializable
         bricks = new BrickController(screenWidth, screenHeight, ball, character, new PowerupController(screenWidth, screenHeight, ball, character, POWERUP_RADIUS, POWERUP_SPEED));
         new Wand ();
         running = false;
+
         StartGame();
     }
     
