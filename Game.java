@@ -36,14 +36,18 @@ public class Game extends Ereignisbehandlung implements Serializable
     private static int POWERUP_SPEED = 2;
     
     private WinScreen win;
+    private boolean running;
     /**
      * Konstruktor für Objekte der Klasse Spiel
      */
     public Game()
     {
         super();
-        ball = new Ball(390, 340, 20, 0, 3);
+        ball = new Ball(390, 140, 20, 0, 3);
         character = new Bat(ball);
+        
+        new SideWalls();
+        new UpperWall();
         
         win = new WinScreen();
         
@@ -53,6 +57,7 @@ public class Game extends Ereignisbehandlung implements Serializable
         background = new Background(screenWidth, screenHeight, BACKGROUND_MIN_STARS, BACKGROUND_MAX_STARS, BACKGROUND_STAR_MIN_RADIUS, BACKGROUND_STAR_MAX_RADIUS, BACKGROUND_STAR_MIN_DECAY, BACKGROUND_STAR_MAX_DECAY, BACKGROUND_STAR_MIN_DELAY, BACKGROUND_STAR_MAX_DELAY);
         bricks = new BrickController(screenWidth, screenHeight, ball, character, new PowerupController(screenWidth, screenHeight, ball, character, POWERUP_RADIUS, POWERUP_SPEED));
         new Wand ();
+        running = false;
         StartGame();
     }
     
@@ -104,19 +109,22 @@ public class Game extends Ereignisbehandlung implements Serializable
     @Override void TaktImpulsAusführen()
     {
         background.frame();
-        bricks.frame();
-        character.checkCollisions();
+        boolean ballBatCollision = false;
+        ballBatCollision = character.checkCollisions();
+        bricks.frame(running, ballBatCollision);
         ball.bewegen();
         
-        //if (bricks.getBrickCount() == 0) {
+        if (bricks.getBrickCount() == 0) {
             win.draw(0,0);
-        //}
+            running = false;
+        }
     }
     
     void StartGame() 
     {
         TaktdauerSetzen(20);
         bricks.populateGrid(BRICK_WIDTH, BRICK_HEIGTH, NUM_COLUMNS, NUM_ROWS, BRICK_SPACING);
+        running = true;
         Starten();    
     }
     

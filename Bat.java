@@ -7,7 +7,7 @@ public class Bat extends Figur
     private int y;
     private int width = BAT_WIDTH;
     private int height = BAT_HEIGHT;
-    private boolean advancedControls;
+    private boolean advancedControls = true;
     private Ball ball;
     
     public Bat(Ball ballNew)
@@ -21,7 +21,6 @@ public class Bat extends Figur
         draw();
     }
     
-    //Größe des Schlägers setzen
     public void setScale(float scale) {
          EigeneFigurLöschen();
          this.width = Math.round(scale * BAT_WIDTH);
@@ -29,12 +28,7 @@ public class Bat extends Figur
          draw();
     }
     
-    /*
-     * Die  Aktionsmethode für gedrückte Sondertasten.
-     * @param taste KeyCode der gedrückten Taste
-     */
-    @Override void SonderTasteGedrückt(int taste)
-    {
+    @Override void SonderTasteGedrückt(int taste) {
         switch (taste)
         {
             // Pfeil nach links + a
@@ -44,7 +38,7 @@ public class Bat extends Figur
                 break;
             // Pfeil nach oben
             case 38:
-                if (!advancedControls) break;
+                if (!advancedControls || y >= height) break;
                 y -= BAT_STEP;
                 break;
             // Pfeil nach rechts
@@ -54,7 +48,7 @@ public class Bat extends Figur
                 break;
             // pfeil nach unten
             case 40:
-                if (!advancedControls) break;
+                if (!advancedControls || y >= Zeichenfenster.MalflächenHöheGeben() - height) break;
                 y += BAT_STEP;
                 break;
         }
@@ -83,21 +77,23 @@ public class Bat extends Figur
         advancedControls = active;
     }
     
-    private void draw()
-    {
+    private void draw() {
         FigurteilFestlegenRechteck(-(width / 2), 0, width, height, "grau");
     }
     
-    public void checkCollisions() {
-        switch (CustomMath.CircleRectangleCollision(ball.getXPos(), ball.getYPos(), ball.getRadius(), x, y, height, width)) {
+    public boolean checkCollisions() {
+        boolean retVal = false;
+        switch (CustomMath.CircleRectangleCollision(ball.getXPos(), ball.getYPos(), ball.getRadius(), x - (width / 2), y, height - (height / 2), width)) {
                 case 1: // Top
                 case 2: // Bottom
                     ball.reflectY();
+                    retVal = true;
                     break;
             
                 case 3: // Left
                 case 4: // Right
                     ball.reflectX();
+                    retVal = true;
                     break;
             
                 case 5: // Top-left
@@ -107,9 +103,10 @@ public class Bat extends Figur
                     int dx =  (int) (0.1 * (ball.getXPos() - (x + width/2)));
                     int dy =  (int) (0.1 * (ball.getYPos() - (x + height/2)));
                     ball.setDirection(dx, dy);
-                    
+                    retVal = true;
                     break;
             }
+            return retVal;
     }
     
     public int getWidth() {
