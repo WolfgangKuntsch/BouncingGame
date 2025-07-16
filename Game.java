@@ -34,6 +34,7 @@ public class Game extends Ereignisbehandlung implements Serializable
     
     private WinScreen win;
     private boolean running;
+    
     /**
      * Konstruktor für Objekte der Klasse Spiel
      */
@@ -83,7 +84,7 @@ public class Game extends Ereignisbehandlung implements Serializable
         background.frame();
         boolean ballBatCollision = false;
         ballBatCollision = character.checkCollisions();
-        bricks.frame(running, ballBatCollision);
+        bricks.frame();
         ball.bewegen();
         
         if (bricks.getBrickCount() == 0) {

@@ -14,9 +14,7 @@ public class BrickController
     
     private Random rand;
     
-    private int score;
-    private int scoreMultiplier = 1;
-    private ScoreIndicator sco;
+    private boolean collision = false;
     public BrickController(int screenWidthNew, int screenHeightNew, Ball ballNew, Bat batNew, PowerupController powerupControllerNew)
     {
         bricks = new ArrayList<Brick>();
@@ -29,7 +27,6 @@ public class BrickController
         rand = new Random();
         
         powerups = powerupControllerNew;
-        sco = new ScoreIndicator();
     }
     
     public void addBrick(Brick brickNew) {
@@ -51,10 +48,8 @@ public class BrickController
         }
     }
     
-    public void frame(boolean running, boolean BallBatCollision) {
-        if (BallBatCollision) {
-            scoreMultiplier = 0;
-        }
+    public void frame() {
+        collision = false;
         //move the powerups
         powerups.frame();
         var iter = bricks.iterator();
@@ -93,14 +88,10 @@ public class BrickController
                     break;
             }
         }
-        score +=1;
-        if (running) {
-            sco.draw(0,0,score);
-        }
     }
     
     private void breakBrick(Brick brick) {
-        scoreMultiplier += 1;
+        collision = true;
         Powerup powerup = powerups.choosePowerup();
         if (powerup != null) {
             powerup.setPosition(brick.getXPos(), brick.getYPos());
@@ -108,7 +99,10 @@ public class BrickController
         }
         brick.remove();
         bricks.remove(brick);
-        score -=10 * scoreMultiplier;
+    }
+    
+    public boolean didCollide() {
+        return collision;
     }
     
     public int getBrickCount () {
