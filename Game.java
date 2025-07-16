@@ -55,7 +55,6 @@ public class Game extends Ereignisbehandlung implements Serializable
         bricks = new BrickController(screenWidth, screenHeight, ball, character, new PowerupController(screenWidth, screenHeight, ball, character, POWERUP_RADIUS, POWERUP_SPEED));
         new Wand ();
         running = false;
-
         StartGame();
     }
     
