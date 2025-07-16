@@ -80,9 +80,9 @@ public class Game extends Ereignisbehandlung implements Serializable
         character.checkCollisions();
         ball.bewegen();
         
-        //if (bricks.getBrickCount() == 0) {
+        if (bricks.getBrickCount() == 0) {
             win.draw(0,0);
-        //}
+        }
     }
     
     void StartGame() 
