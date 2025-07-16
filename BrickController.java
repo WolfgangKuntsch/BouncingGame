@@ -13,6 +13,9 @@ public class BrickController
     private PowerupController powerups;
     
     private Random rand;
+    
+    private int score;
+    private ScoreIndicator sco;
     public BrickController(int screenWidthNew, int screenHeightNew, Ball ballNew, Bat batNew, PowerupController powerupControllerNew)
     {
         bricks = new ArrayList<Brick>();
@@ -25,6 +28,7 @@ public class BrickController
         rand = new Random();
         
         powerups = powerupControllerNew;
+        sco = new ScoreIndicator();
     }
     
     public void addBrick(Brick brickNew) {
@@ -85,6 +89,8 @@ public class BrickController
                     break;
             }
         }
+        score +=1;
+        sco.draw(0,0,score);
     }
     private void breakBrick(Brick brick) {
         Powerup powerup = powerups.choosePowerup();
@@ -94,9 +100,11 @@ public class BrickController
         }
         brick.remove();
         bricks.remove(brick);
+        score -=10;
     }
     
     public int getBrickCount () {
         return bricks.size();
     }
+
 }
