@@ -116,7 +116,7 @@ public class Game extends Ereignisbehandlung implements Serializable
         background.frame();
         boolean ballBatCollision = false;
         ballBatCollision = character.checkCollisions();
-        bricks.frame();
+        bricks.frame(running, ballBatCollision);
         ball.bewegen();
         
         if (bricks.getBrickCount() == 0) {

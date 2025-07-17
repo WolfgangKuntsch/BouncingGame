@@ -1,112 +1,105 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-public class BrickController
-{
-    private ArrayList<Brick> bricks;
+public class BrickController {
+    private ArrayList<Brick> bricks = new ArrayList<>();
     private Ball ball;
     private Bat bat;
-    
+    private PowerupController powerups;
+    private Score sco = new Score();
+
     private int screenWidth;
     private int screenHeight;
-    
-    private PowerupController powerups;
-    
-    private Random rand;
-    
-    private boolean collision = false;
-    public BrickController(int screenWidthNew, int screenHeightNew, Ball ballNew, Bat batNew, PowerupController powerupControllerNew)
-    {
-        bricks = new ArrayList<Brick>();
+    private Random rand = new Random();
+
+    public BrickController(int screenWidthNew, int screenHeightNew, Ball ballNew, Bat batNew, PowerupController powerupControllerNew) {
         ball = ballNew;
         bat = batNew;
-        
+        powerups = powerupControllerNew;
         screenWidth = screenWidthNew;
         screenHeight = screenHeightNew;
-        
-        rand = new Random();
-        
-        powerups = powerupControllerNew;
     }
-    
+
     public void addBrick(Brick brickNew) {
         bricks.add(brickNew);
     }
-    
+
     public void populateGrid(int brickWidth, int brickHeight, int cols, int rows, int spacing) {
-        if (((screenWidth - ((cols + 1) * spacing) / brickWidth) >= cols) && ((screenHeight - ((rows + 1) * spacing) / brickHeight) >= rows)) {
-            int sideSpacing = (screenWidth - (cols * brickWidth + (cols - 1) * spacing)) / 2;    
+        if ((screenWidth - ((cols + 1) * spacing)) / brickWidth >= cols && 
+            (screenHeight - ((rows + 1) * spacing)) / brickHeight >= rows) {
+
+            int sideSpacing = (screenWidth - (cols * brickWidth + (cols - 1) * spacing)) / 2;
+
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
-                    Brick brick = new Brick(sideSpacing + j * (brickWidth + spacing), spacing + i * (brickHeight + spacing), brickHeight, brickWidth);
+                    Brick brick = new Brick(
+                        sideSpacing + j * (brickWidth + spacing),
+                        spacing + i * (brickHeight + spacing),
+                        brickHeight,
+                        brickWidth
+                    );
                     bricks.add(brick);
                 }
             }
-        }
-        else {
+        } else {
             throw new IndexOutOfBoundsException("Too many rows or columns to fit on screen");
         }
     }
-    
-    public void frame() {
-        collision = false;
-        //move the powerups
+
+    public void frame(boolean running, boolean batHit) {
         powerups.frame();
+
         var iter = bricks.iterator();
         while (iter.hasNext()) {
             Brick brick = iter.next();
-            // draw the brick
             brick.draw();
-            // collision between Ball and Brick
-            switch (CustomMath.CircleRectangleCollision(ball.getXPos(), ball.getYPos(), ball.getRadius(), brick.getXPos(), brick.getYPos(), brick.getHeight(), brick.getWidth())) {
-                case 1: // Top
-                case 2: // Bottom
-                    ball.reflectY();
-                    iter.remove();
-                    breakBrick(brick);
-                    //iter.remove();
-                    break;
-            
-                case 3: // Left
-                case 4: // Right
-                    ball.reflectX();
-                    iter.remove();
-                    breakBrick(brick);
-                    //iter.remove();
-                    break;
-            
-                case 5: // Top-left
-                case 6: // Top-right
-                case 7: // Bottom-left
-                case 8: // Bottom-right
-                    int dx =  (int) (0.1 * (ball.getXPos() - (brick.getXPos() + brick.getWidth()/2)));
-                    int dy =  (int) (0.1 * (ball.getYPos() - (brick.getYPos() + brick.getHeight()/2)));
-                    ball.setDirection(dx, dy);
-                    iter.remove();
-                    breakBrick(brick);
-                    
-                    break;
+
+            int collisionSide = CustomMath.CircleRectangleCollision(
+                ball.getXPos(), ball.getYPos(), ball.getRadius(),
+                brick.getXPos(), brick.getYPos(), brick.getHeight(), brick.getWidth()
+            );
+
+            if (collisionSide > 0) {
+                handleBallReflection(collisionSide);
+                handleBrickBreak(brick, iter);
             }
         }
+
+        sco.frame(running, batHit);
     }
-    
-    private void breakBrick(Brick brick) {
-        collision = true;
+
+    private void handleBallReflection(int collisionSide) {
+        switch (collisionSide) {
+            case 1: case 2:
+                ball.reflectY();
+                break;
+            case 3: case 4:
+                ball.reflectX();
+                break;
+            case 5: case 6: case 7: case 8:
+                int dx = (int) (0.1 * (ball.getXPos() - (ball.getXPos() + ball.getRadius())));
+                int dy = (int) (0.1 * (ball.getYPos() - (ball.getYPos() + ball.getRadius())));
+                ball.setDirection(dx, dy);
+                break;
+        }
+    }
+
+    private void handleBrickBreak(Brick brick, java.util.Iterator<Brick> iter) {
         Powerup powerup = powerups.choosePowerup();
         if (powerup != null) {
             powerup.setPosition(brick.getXPos(), brick.getYPos());
-            powerups.addPowerup(powerup); 
+            powerups.addPowerup(powerup);
         }
         brick.remove();
-        bricks.remove(brick);
+        iter.remove();
+        sco.onBrickHit(brick.getXPos(), brick.getYPos());
     }
-    
-    public boolean didCollide() {
-        return collision;
-    }
-    
-    public int getBrickCount () {
+
+    public int getBrickCount() {
         return bricks.size();
     }
 
+    public Score getScore() {
+        return sco;
+    }
 }
