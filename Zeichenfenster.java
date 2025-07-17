@@ -34,7 +34,7 @@ class Zeichenfenster
     private static Zeichenfenster zeichenfläche = null;
     
     /** Fenster für die Zeichenfläche. */
-    private JFrame fenster;
+    private static JFrame fenster;
     /** Die eigentliche Darstellungskomponente. */
     private JComponent malfläche;
     /** Stop-Knopf für den Taktgeber. */
@@ -402,6 +402,11 @@ class Zeichenfenster
         start.setEnabled(true);
         stop.setEnabled(false);
         timer.stop();
+    }
+    
+    static JFrame JFrameGeben()
+    {
+        return fenster;
     }
     
     /**
@@ -1865,4 +1870,5 @@ class Zeichenfenster
             g2.setTransform(alt);
         }
     }
+    
 }

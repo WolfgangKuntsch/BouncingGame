@@ -21,6 +21,12 @@ public class Bat extends Figur
         draw();
     }
     
+    public void rePaint()
+    {
+        PositionSetzen(XPositionGeben(), YPositionGeben());
+        draw();
+    }
+    
     public void setScale(float scale) {
          EigeneFigurLöschen();
          this.width = Math.round(scale * BAT_WIDTH);
