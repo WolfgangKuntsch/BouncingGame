@@ -6,7 +6,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-
 /**
  * Beschreiben Sie hier die Klasse Spiel.
  * 
@@ -16,10 +15,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class Game extends Ereignisbehandlung implements Serializable
 {
     private static final long serialVersionUID = 1L;
-    
+
     private Bat character;
     private Ball ball;
-    
+
     private Background background;
     private static int BACKGROUND_MIN_STARS = 1;
     private static int BACKGROUND_MAX_STARS = 1;
@@ -29,20 +28,20 @@ public class Game extends Ereignisbehandlung implements Serializable
     private static int BACKGROUND_STAR_MAX_DECAY = 2;
     private static int BACKGROUND_STAR_MIN_DELAY = 5;
     private static int BACKGROUND_STAR_MAX_DELAY = 15;
-    
+
     private BrickController bricks;
     private static int BRICK_WIDTH = 80;
     private static int BRICK_HEIGTH = 20;
     private static int BRICK_SPACING = 30;
     private static int NUM_COLUMNS = 6;
     private static int NUM_ROWS = 5;
-    
+
     private static int POWERUP_RADIUS = 10;
     private static int POWERUP_SPEED = 2;
-    
+
     private WinScreen win;
     private boolean running;
-    
+
     /**
      * Konstruktor für Objekte der Klasse Spiel
      */
@@ -51,66 +50,21 @@ public class Game extends Ereignisbehandlung implements Serializable
         super();
         ball = new Ball(390, 140, 20, 0, 3);
         character = new Bat(ball);
-        
+
         new SideWalls();
         new UpperWall();
-        
+
         win = new WinScreen();
-        
+
         int screenWidth = Zeichenfenster.MalflächenBreiteGeben();
         int screenHeight = Zeichenfenster.MalflächenHöheGeben();
-        
+
         background = new Background(screenWidth, screenHeight, BACKGROUND_MIN_STARS, BACKGROUND_MAX_STARS, BACKGROUND_STAR_MIN_RADIUS, BACKGROUND_STAR_MAX_RADIUS, BACKGROUND_STAR_MIN_DECAY, BACKGROUND_STAR_MAX_DECAY, BACKGROUND_STAR_MIN_DELAY, BACKGROUND_STAR_MAX_DELAY);
         bricks = new BrickController(screenWidth, screenHeight, ball, character, new PowerupController(screenWidth, screenHeight, ball, character, POWERUP_RADIUS, POWERUP_SPEED));
         running = false;
         StartGame();
     }
-    
-    // public void saveGame(String filename) {
-        // try 
-        // //(ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) 
-        // {
-            // FileOutputStream  fileOut = new FileOutputStream(filename);
-            // ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            // out.writeObject(this);
-            // out.close();
-            // fileOut.close();
-            // System.out.println("Game saved successfully!");
-        // } 
-        // catch (IOException e) 
-        // {
-            // System.out.println("Error saving game: " + e.getMessage());
-        // }
-    // }
-    
-     // public static Game loadGame(String filename) 
-     // {
-        // System.out.println("loading from" + filename);
-         // try 
-         // //(ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) 
-        // {
-            // FileInputStream fileIn = new FileInputStream(filename);
-            // ObjectInputStream in = new ObjectInputStream(fileIn);
-            // this = in.readObject();
-            // in.close();
-            // fileIn.close();
-            // // Game loadedGame = (Game) in.readObject();
-            // // System.out.println("Game loaded successfully!");
-            // // return loadedGame;
-        // } 
-        // catch (IOException i)
-        // {
-            // i.printStackTrace();
-            // return null;
-        // }
-        // catch (ClassNotFoundException c)
-        // {
-            // System.out.println("Error loading game: " + c.getMessage());
-            // c.printStackTrace();
-            // return null;
-        // }
-        // }
-    
+
     @Override void TaktImpulsAusführen()
     {
         background.frame();
@@ -118,13 +72,13 @@ public class Game extends Ereignisbehandlung implements Serializable
         ballBatCollision = character.checkCollisions();
         bricks.frame(running, ballBatCollision);
         ball.bewegen();
-        
+
         if (bricks.getBrickCount() == 0) {
             win.draw(0,0);
             running = false;
         }
     }
-    
+
     void StartGame() 
     {
         TaktdauerSetzen(20);
@@ -132,19 +86,19 @@ public class Game extends Ereignisbehandlung implements Serializable
         running = true;
         Starten();    
     }
-    
+
     void PauseGame()
     {
         Anhalten();
         running = false;
     }
-    
+
     void ResumeGame() 
     {
         Starten();
         running = true;
     }
-    
+
     @Override void TasteGedrückt (char taste)
     {
         switch (taste)
@@ -163,19 +117,13 @@ public class Game extends Ereignisbehandlung implements Serializable
                     SaveGame();
                 }
                 break;
-            case 'l':        //Taste L
-                if (!running)
-                {
-                    LoadGame();
-                }
-                break;
         }
     }
-    
+
     //public static String serialize (GameState state);
-    
+
     //static GameState deserialize (String customFormat);
-    
+
     private void SaveGame()
     {
         JFileChooser fileChooser = new JFileChooser();
@@ -194,7 +142,7 @@ public class Game extends Ereignisbehandlung implements Serializable
                 filePath += ".bnc";
                 selectedFile = new File(filePath);
             }
-            
+
             // Hier den eigentlichen Speichervorgang durchführen
             try (FileOutputStream fileOut = new FileOutputStream(selectedFile);
             ObjectOutputStream out = new ObjectOutputStream(fileOut))
@@ -207,7 +155,7 @@ public class Game extends Ereignisbehandlung implements Serializable
             }
         }
     }
-    
+
     private void LoadGame()
     {
         JFileChooser fileChooser = new JFileChooser();
@@ -226,17 +174,10 @@ public class Game extends Ereignisbehandlung implements Serializable
                 try (FileInputStream fileIn = new FileInputStream(selectedFile);
                 ObjectInputStream in = new ObjectInputStream(fileIn))
                 {
-                    ball.Entfernen();
-                    character.Entfernen();
                     Game newGame = (Game) in.readObject();
-                    ball = newGame.ball;
-                    ball.rePaint();
-                    character = newGame.character;
-                    character.rePaint();
-                    background = newGame.background;
-                    bricks = newGame.bricks;
-                    win = newGame.win;
-                    ResumeGame();
+                    // Hier: Anzeige und Zustand auf das neue Spiel-Objekt newGame umstellen ...
+                    
+                    
                 }
                 catch (IOException i)
                 {
@@ -250,7 +191,6 @@ public class Game extends Ereignisbehandlung implements Serializable
                     return;
                 }
             }
-            
         }
     }
 }
