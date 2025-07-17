@@ -9,10 +9,12 @@ public class Bat extends Figur
     private int height = BAT_HEIGHT;
     private boolean advancedControls = true;
     private Ball ball;
+    private SoundEffect sound;
     
     public Bat(Ball ballNew)
     {
         super();
+        sound = new SoundEffect("jump.mp3");
         ball = ballNew;
         
         this.x = Zeichenfenster.MalflächenBreiteGeben() / 2;
@@ -92,6 +94,7 @@ public class Bat extends Figur
         switch (CustomMath.CircleRectangleCollision(ball.getXPos(), ball.getYPos(), ball.getRadius(), x - (width / 2), y, height - (height / 2), width)) {
                 case 1: // Top
                 case 2: // Bottom
+                    sound.play();
                     ball.reflectY();
                     retVal = true;
                     break;

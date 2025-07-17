@@ -1,7 +1,5 @@
-
-import java.applet.*;
-import java.nio.file.*;
-import java.net.*;
+import javazoom.jl.player.Player;
+import java.io.FileInputStream;
 
 /**
  * Beschreiben Sie hier die Klasse SoundEffect.
@@ -11,24 +9,30 @@ import java.net.*;
  */
 public class SoundEffect
 {
-    private Path path;
-    private AudioClip sound;
+    private Player player;
     
-    SoundEffect(String wavDatei)
+    SoundEffect(String mp3Datei)
     {
-        path = Paths.get(wavDatei);
         try
         {
-            sound = Applet.newAudioClip( path.toUri().toURL() );
+            FileInputStream fis = new FileInputStream(mp3Datei);
+            player = new Player(fis);
         }
-        catch(MalformedURLException e)
+        catch (Exception e)
         {
-            
-        }
+            e.printStackTrace();
+        }        
     }
 
     public void play()
     {
-        sound.play();
+        try
+        {
+            player.play();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }        
     }
 }
