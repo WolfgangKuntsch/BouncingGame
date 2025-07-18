@@ -9,10 +9,10 @@ public class SideWalls extends Figur {
         this.screenHeight = Zeichenfenster.MalflächenHöheGeben()*3;
         
         //linke Wand
-        FigurteilFestlegenRechteck(0, 0, WAND_DICKE, screenHeight, "blau");
+        FigurteilFestlegenRechteck(0, 0, WAND_DICKE, screenHeight, "magenta");
         
         //rechte Wand
-        FigurteilFestlegenRechteck(screenWidth, 0, WAND_DICKE, screenHeight, "rot");
+        FigurteilFestlegenRechteck(screenWidth, 0, WAND_DICKE, screenHeight, "magenta");
 
         GanzNachVornBringen();
         
