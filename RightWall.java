@@ -1,18 +1,18 @@
-public class SideWalls extends Figur {
+public class RightWall extends Figur {
     private final int WAND_DICKE = 10;
     private int screenWidth;
     private int screenHeight;
 
-    public SideWalls() {
+    public RightWall() {
         super();
         this.screenWidth = 1950;
         this.screenHeight = Zeichenfenster.MalflächenHöheGeben()*3;
         
         //linke Wand
-        FigurteilFestlegenRechteck(0, 0, WAND_DICKE, screenHeight, "blau");
+        //FigurteilFestlegenRechteck(0, 0, WAND_DICKE, screenHeight, "magenta");
         
         //rechte Wand
-        FigurteilFestlegenRechteck(screenWidth, 0, WAND_DICKE, screenHeight, "rot");
+        FigurteilFestlegenRechteck(screenWidth, 0, WAND_DICKE, screenHeight, "magenta");
 
         GanzNachVornBringen();
         
@@ -22,9 +22,9 @@ public class SideWalls extends Figur {
  
     public boolean checkKollision(int x, int y, int radius) {
         // Linke Wand
-        if (x - radius <= WAND_DICKE) {
-            return true;
-        }
+        // if (x - radius <= WAND_DICKE) {
+            // return true;
+        // }
         // Rechte Wand
         if (x + radius >= screenWidth - WAND_DICKE) {
             return true;
@@ -40,5 +40,9 @@ public class SideWalls extends Figur {
    
     public int getWandDicke() {
         return WAND_DICKE;
+    }
+    
+    public int getHeight() {
+        return screenHeight;
     }
 }

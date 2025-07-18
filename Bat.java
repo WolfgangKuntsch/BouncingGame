@@ -90,19 +90,22 @@ public class Bat extends Figur
     }
     
     public boolean checkCollisions() {
-        boolean retVal = false;
         switch (CustomMath.CircleRectangleCollision(ball.getXPos(), ball.getYPos(), ball.getRadius(), x - (width / 2), y, height - (height / 2), width)) {
+                case 0: // No collision
+                    return false;
+
                 case 1: // Top
                 case 2: // Bottom
+
                     //sound.play();
+
+
                     ball.reflectY();
-                    retVal = true;
                     break;
             
                 case 3: // Left
                 case 4: // Right
                     ball.reflectX();
-                    retVal = true;
                     break;
             
                 case 5: // Top-left
@@ -112,10 +115,10 @@ public class Bat extends Figur
                     int dx =  (int) (0.1 * (ball.getXPos() - (x + width/2)));
                     int dy =  (int) (0.1 * (ball.getYPos() - (x + height/2)));
                     ball.setDirection(dx, dy);
-                    retVal = true;
                     break;
             }
-            return retVal;
+            //sound.play();
+            return true;
     }
     
     public int getWidth() {
