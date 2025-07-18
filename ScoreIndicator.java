@@ -8,8 +8,8 @@ public class ScoreIndicator extends Symbol
         t1 = new Text();
         t1.FarbeSetzen("weiss");
         t1.TextSetzen("Score: ");
-        t1.TextGrößeSetzen(80);
-        t1.PositionSetzen(10, 60);
+        t1.TextGrößeSetzen(30);
+        t1.PositionSetzen(10, 30);
         t1.SichtbarkeitSetzen(false);
     }
     

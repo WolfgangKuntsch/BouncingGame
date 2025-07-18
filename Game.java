@@ -1,4 +1,11 @@
 import java.io.*;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
 /**
  * Beschreiben Sie hier die Klasse Spiel.
  * 
@@ -8,10 +15,10 @@ import java.io.*;
 public class Game extends Ereignisbehandlung implements Serializable
 {
     private static final long serialVersionUID = 1L;
-    
+
     private Bat character;
     private Ball ball;
-    
+
     private Background background;
     private static int BACKGROUND_MIN_STARS = 1;
     private static int BACKGROUND_MAX_STARS = 1;
@@ -21,104 +28,169 @@ public class Game extends Ereignisbehandlung implements Serializable
     private static int BACKGROUND_STAR_MAX_DECAY = 2;
     private static int BACKGROUND_STAR_MIN_DELAY = 5;
     private static int BACKGROUND_STAR_MAX_DELAY = 15;
-    
+
     private BrickController bricks;
     private static int BRICK_WIDTH = 80;
     private static int BRICK_HEIGTH = 20;
     private static int BRICK_SPACING = 30;
     private static int NUM_COLUMNS = 6;
     private static int NUM_ROWS = 5;
-    
+
     private static int POWERUP_RADIUS = 10;
     private static int POWERUP_SPEED = 2;
-    
+
     private WinScreen win;
+    private boolean running;
+
     /**
      * Konstruktor für Objekte der Klasse Spiel
      */
     public Game()
     {
         super();
-        ball = new Ball(390, 340, 20, 0, 3);
+        ball = new Ball(390, 140, 20, 0, 3);
         character = new Bat(ball);
-        
+
         new SideWalls();
         new UpperWall();
-        
+
         win = new WinScreen();
-        
+
         int screenWidth = Zeichenfenster.MalflächenBreiteGeben();
         int screenHeight = Zeichenfenster.MalflächenHöheGeben();
-        
+
         background = new Background(screenWidth, screenHeight, BACKGROUND_MIN_STARS, BACKGROUND_MAX_STARS, BACKGROUND_STAR_MIN_RADIUS, BACKGROUND_STAR_MAX_RADIUS, BACKGROUND_STAR_MIN_DECAY, BACKGROUND_STAR_MAX_DECAY, BACKGROUND_STAR_MIN_DELAY, BACKGROUND_STAR_MAX_DELAY);
         bricks = new BrickController(screenWidth, screenHeight, ball, character, new PowerupController(screenWidth, screenHeight, ball, character, POWERUP_RADIUS, POWERUP_SPEED));
-
+        running = false;
         StartGame();
     }
-    
-    public void saveGame(String filename) {
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
-            out.writeObject(this);
-            System.out.println("Game saved successfully!");
-        } catch (IOException e) {
-            System.out.println("Error saving game: " + e.getMessage());
-        }
-    }
-    
-     public static Game loadGame(String filename) {
-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
-            Game loadedGame = (Game) in.readObject();
-            System.out.println("Game loaded successfully!");
-            return loadedGame;
-        } catch (IOException | ClassNotFoundException e) {
-            System.out.println("Error loading game: " + e.getMessage());
-            return null;
-        }
-    }
-    
+
     @Override void TaktImpulsAusführen()
     {
         background.frame();
-        bricks.frame();
-        character.checkCollisions();
+        boolean ballBatCollision = false;
+        ballBatCollision = character.checkCollisions();
+        bricks.frame(running, ballBatCollision);
         ball.bewegen();
-        
+
         if (bricks.getBrickCount() == 0) {
             win.draw(0,0);
+            running = false;
         }
     }
-    
+
     void StartGame() 
     {
         TaktdauerSetzen(20);
         bricks.populateGrid(BRICK_WIDTH, BRICK_HEIGTH, NUM_COLUMNS, NUM_ROWS, BRICK_SPACING);
+        running = true;
         Starten();    
     }
-    
+
     void PauseGame()
     {
         Anhalten();
+        running = false;
     }
-    
+
     void ResumeGame() 
     {
-        Starten();    
+        Starten();
+        running = true;
     }
-    
-    @Override void SonderTasteGedrückt (int taste)
+
+    @Override void TasteGedrückt (char taste)
     {
         switch (taste)
         {
-            case 80:        //Taste P
+            case 'p':        //Taste P
                 PauseGame();
+                System.out.println("Pause");
                 break;
-            case 82:        //Taste R
+            case 'r':        //Taste R
                 ResumeGame();
+                System.out.println("Resume");
+                break;
+            case 's':        //Taste S
+                if (!running)
+                {
+                    SaveGame();
+                }
                 break;
         }
     }
-    
+
     //public static String serialize (GameState state);
-    
+
     //static GameState deserialize (String customFormat);
+
+    private void SaveGame()
+    {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Spiel speichern unter");
+        // Optional: Filter für Dateitypen hinzufügen
+        FileNameExtensionFilter textFilter = new FileNameExtensionFilter("Bouncing-Dateien (*.bnc)", "bnc");
+        fileChooser.setFileFilter(textFilter);
+        int userSelection = fileChooser.showSaveDialog(Zeichenfenster.JFrameGeben());
+        if (userSelection == JFileChooser.APPROVE_OPTION)
+        {
+            File selectedFile = fileChooser.getSelectedFile();
+            String filePath = selectedFile.getAbsolutePath();
+            // Überprüfen, ob die Endung fehlt und ggf. hinzufügen
+            if (!filePath.toLowerCase().endsWith(".bnc"))
+            {
+                filePath += ".bnc";
+                selectedFile = new File(filePath);
+            }
+
+            // Hier den eigentlichen Speichervorgang durchführen
+            try (FileOutputStream fileOut = new FileOutputStream(selectedFile);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut))
+            {
+                out.writeObject(this);
+            }
+            catch (IOException i)
+            {
+                i.printStackTrace();
+            }
+        }
+    }
+
+    private void LoadGame()
+    {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Spiel öffnen");
+        // Optional: Filter für Dateitypen hinzufügen
+        FileNameExtensionFilter textFilter = new FileNameExtensionFilter("Bouncing-Dateien (*.bnc)", "bnc");
+        fileChooser.setFileFilter(textFilter);
+        int userSelection = fileChooser.showOpenDialog(Zeichenfenster.JFrameGeben());
+        if (userSelection == JFileChooser.APPROVE_OPTION)
+        {
+            File selectedFile = fileChooser.getSelectedFile();
+            String filePath = selectedFile.getAbsolutePath();
+            // Überprüfen, ob die Endung fehlt und ggf. hinzufügen
+            if (filePath.toLowerCase().endsWith(".bnc"))
+            {
+                try (FileInputStream fileIn = new FileInputStream(selectedFile);
+                ObjectInputStream in = new ObjectInputStream(fileIn))
+                {
+                    Game newGame = (Game) in.readObject();
+                    // Hier: Anzeige und Zustand auf das neue Spiel-Objekt newGame umstellen ...
+                    
+                    
+                }
+                catch (IOException i)
+                {
+                    i.printStackTrace();
+                    return;
+                }
+                catch (ClassNotFoundException c)
+                {
+                    System.out.println("Game Klasse nicht gefunden.");
+                    c.printStackTrace();
+                    return;
+                }
+            }
+        }
+    }
 }

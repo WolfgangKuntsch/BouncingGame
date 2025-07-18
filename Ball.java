@@ -21,6 +21,13 @@ public class Ball extends Figur {
         PositionSetzen(xPos, yPos);
         GanzNachVornBringen();
     }
+    
+    public void rePaint()
+    {
+        FigurteilFestlegenEllipse(-radius, -radius, radius*2, radius*2, "rot");
+        PositionSetzen(XPositionGeben(), YPositionGeben());
+        GanzNachVornBringen();
+    }
 
     public void bewegen() {
         

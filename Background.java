@@ -1,7 +1,9 @@
 import java.util.Random;
 import java.util.ArrayList;
+import java.io.*;
 
-public class Background {
+public class Background implements Serializable
+{
     private Rechteck r1;
     private ArrayList<Star> stars;
     private int screenWidth;
