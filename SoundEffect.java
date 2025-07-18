@@ -21,14 +21,19 @@ public class SoundEffect
         catch (Exception e)
         {
             e.printStackTrace();
-        }        
+        }
     }
 
     public void play()
     {
         try
         {
-            player.play();
+            new Thread(() -> {
+                try {
+                    player.play();
+                }
+                catch (Exception e) {}
+            }).start();
         }
         catch (Exception e)
         {

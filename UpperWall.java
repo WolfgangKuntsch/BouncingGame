@@ -10,7 +10,7 @@ public class UpperWall extends Figur {
         this.screenHeight = Zeichenfenster.MalflächenHöheGeben();
         
         //obere Wand
-        FigurteilFestlegenRechteck(0, 0, screenWidth*3, WAND_DICKE, "grün");
+        FigurteilFestlegenRechteck(0, 0, screenWidth*3, WAND_DICKE, "magenta");
 
         GanzNachVornBringen();
         

@@ -52,7 +52,8 @@ public class Game extends Ereignisbehandlung implements Serializable
         ball = new Ball(390, 140, 20, 0, 3);
         character = new Bat(ball);
 
-        new SideWalls();
+        new RightWall();
+        new LeftWall();
         new UpperWall();
 
         win = new WinScreen();
