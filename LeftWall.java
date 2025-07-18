@@ -41,8 +41,11 @@ public class LeftWall extends Figur {
     public int getWandDicke() {
         return WAND_DICKE;
     }
+<<<<<<< HEAD
     
     public int getHeight() {
         return screenHeight;
     }
+=======
+>>>>>>> 2a5b0df3ce19e90667c116633e14e6677bd7ec53
 }

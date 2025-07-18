@@ -36,3 +36,4 @@ public class UpperWall extends Figur {
         return WAND_DICKE;
     }
 }
+

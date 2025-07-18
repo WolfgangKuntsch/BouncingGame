@@ -96,10 +96,13 @@ public class Bat extends Figur
 
                 case 1: // Top
                 case 2: // Bottom
+<<<<<<< HEAD
 
                     //sound.play();
 
 
+=======
+>>>>>>> 2a5b0df3ce19e90667c116633e14e6677bd7ec53
                     ball.reflectY();
                     break;
             
@@ -117,7 +120,11 @@ public class Bat extends Figur
                     ball.setDirection(dx, dy);
                     break;
             }
+<<<<<<< HEAD
             //sound.play();
+=======
+            sound.play();
+>>>>>>> 2a5b0df3ce19e90667c116633e14e6677bd7ec53
             return true;
     }
     

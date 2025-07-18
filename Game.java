@@ -43,6 +43,7 @@ public class Game extends Ereignisbehandlung implements Serializable
 
     private WinScreen win;
     private boolean running;
+    
 
     /**
      * Konstruktor für Objekte der Klasse Spiel
@@ -58,6 +59,11 @@ public class Game extends Ereignisbehandlung implements Serializable
         
         //new SideWalls();
 
+<<<<<<< HEAD
+=======
+        new RightWall();
+        new LeftWall();
+>>>>>>> 2a5b0df3ce19e90667c116633e14e6677bd7ec53
         new UpperWall();
 
         win = new WinScreen();
@@ -136,7 +142,7 @@ public class Game extends Ereignisbehandlung implements Serializable
 
     //static GameState deserialize (String customFormat);
 
-    private void SaveGame()
+    public void SaveGame()
     {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Spiel speichern unter");
@@ -168,7 +174,7 @@ public class Game extends Ereignisbehandlung implements Serializable
         }
     }
 
-    private void LoadGame()
+    public void LoadGame()
     {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setDialogTitle("Spiel öffnen");
