@@ -18,7 +18,9 @@ public class Game extends Ereignisbehandlung implements Serializable
 
     private Bat character;
     private Ball ball;
-
+    private SideWalls leftWall;
+    private SideWalls rightWall;
+    
     private Background background;
     private static int BACKGROUND_MIN_STARS = 1;
     private static int BACKGROUND_MAX_STARS = 1;
@@ -50,8 +52,11 @@ public class Game extends Ereignisbehandlung implements Serializable
         super();
         ball = new Ball(390, 140, 20, 0, 3);
         character = new Bat(ball);
-
-        new SideWalls();
+        
+        rightWall = new rightWall();
+        leftWall = new leftWall();
+        
+        //new SideWalls();
         new UpperWall();
 
         win = new WinScreen();
@@ -77,6 +82,12 @@ public class Game extends Ereignisbehandlung implements Serializable
             win.draw(0,0);
             running = false;
         }
+        
+        if (CustomMath.CircleRectangleCollision(ball.getXPos(), ball.getYPos(), ball.getRadius(), 
+            rightWall.XPositionGeben(), rightWall.YPositionGeben(), rightWall.getHeight(), rightWall.getWidth()) > 0) 
+            {
+                
+            }
     }
 
     void StartGame() 
