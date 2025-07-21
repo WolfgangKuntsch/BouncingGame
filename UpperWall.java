@@ -1,26 +1,31 @@
-
-public class UpperWall extends Figur {
+public class UpperWall {
     private final int WAND_DICKE = 10;
     private int screenWidth;
     private int screenHeight;
+    
+    private int xPos;
+    private int yPos;
+    
+    private WallSymbol symbol;
 
-    public UpperWall() {
+    public UpperWall(int screenWidthNew, int screenHeightNew) {
         super();
-        this.screenWidth = Zeichenfenster.MalflächenBreiteGeben();
-        this.screenHeight = Zeichenfenster.MalflächenHöheGeben();
+        this.screenWidth = screenWidthNew;
+        this.screenHeight = screenHeightNew;
         
-        //obere Wand
-        FigurteilFestlegenRechteck(0, 0, screenWidth*3, WAND_DICKE, "magenta");
-
-        GanzNachVornBringen();
-        
-        PositionSetzen(0, 0);
+        xPos = 0;
+        yPos = 0;
+        symbol = new WallSymbol(screenWidth, WAND_DICKE, xPos, yPos);
     }
 
  
     public boolean checkKollision(int x, int y, int radius) {
-        // Obere Wand
-        if (y - radius <= WAND_DICKE) {
+        // Linke Wand
+        // if (x - radius <= WAND_DICKE) {
+            // return true;
+        // }
+        // Rechte Wand
+        if (x + radius >= screenWidth - WAND_DICKE) {
             return true;
         }
         return false;
@@ -35,5 +40,16 @@ public class UpperWall extends Figur {
     public int getWandDicke() {
         return WAND_DICKE;
     }
-}
 
+    public int getWidth() {
+        return screenHeight;
+    }
+    
+    public int getX() {
+        return xPos;
+    }
+    
+    public int getY() {
+        return yPos;
+    }
+}

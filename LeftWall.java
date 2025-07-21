@@ -1,34 +1,33 @@
-public class LeftWall extends Figur {
+public class LeftWall {
     private final int WAND_DICKE = 10;
     private int screenWidth;
     private int screenHeight;
+    
+    private int xPos;
+    private int yPos;
+    
+    private WallSymbol symbol;
 
-    public LeftWall() {
+    public LeftWall(int screenWidthNew, int screenHeightNew) {
         super();
-        this.screenWidth = 1950;
-        this.screenHeight = Zeichenfenster.MalflächenHöheGeben()*3;
+        this.screenWidth = screenWidthNew;
+        this.screenHeight = screenHeightNew;
         
-        //linke Wand
-        FigurteilFestlegenRechteck(0, 0, WAND_DICKE, screenHeight, "magenta");
-        
-        //rechte Wand
-        //FigurteilFestlegenRechteck(screenWidth, 0, WAND_DICKE, screenHeight, "magenta");
-
-        GanzNachVornBringen();
-        
-        PositionSetzen(0, 0);
+        xPos = 0;
+        yPos = 0;
+        symbol = new WallSymbol(WAND_DICKE, screenHeight, xPos, yPos);
     }
 
  
     public boolean checkKollision(int x, int y, int radius) {
         // Linke Wand
-        if (x - radius <= WAND_DICKE) {
-            return true;
-        }
-        // Rechte Wand
-        // if (x + radius >= screenWidth - WAND_DICKE) {
+        // if (x - radius <= WAND_DICKE) {
             // return true;
         // }
+        // Rechte Wand
+        if (x + radius >= screenWidth - WAND_DICKE) {
+            return true;
+        }
         return false;
     }
 
@@ -41,11 +40,16 @@ public class LeftWall extends Figur {
     public int getWandDicke() {
         return WAND_DICKE;
     }
-<<<<<<< HEAD
-    
+
     public int getHeight() {
         return screenHeight;
     }
-=======
->>>>>>> 2a5b0df3ce19e90667c116633e14e6677bd7ec53
+    
+    public int getX() {
+        return xPos;
+    }
+    
+    public int getY() {
+        return yPos;
+    }
 }

@@ -84,7 +84,7 @@ public class Ereignisbehandlung
      */
     void TasteGedrückt (char taste)
     {
-        System. out. println ("Taste: " + taste);
+        //System. out. println ("Taste: " + taste);
     }
     
     /**
@@ -106,6 +106,6 @@ public class Ereignisbehandlung
      */
     void MausGeklickt (int x, int y, int anzahl)
     {
-        System. out. println ("Maus: (" + x + "|" + y + "), " + anzahl + " mal");
+        //System. out. println ("Maus: (" + x + "|" + y + "), " + anzahl + " mal");
     }
 }

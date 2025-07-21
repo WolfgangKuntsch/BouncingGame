@@ -7,33 +7,38 @@ public class Bat extends Figur
     private int y;
     private int width = BAT_WIDTH;
     private int height = BAT_HEIGHT;
-    private boolean advancedControls = true;
+    private boolean advancedControls;
+    private boolean fast;
     private Ball ball;
+    
+    private int screenWidth;
+    private int screenHeight;
+    
+    private BatSymbol symbol;
     //private SoundEffect sound;
     
-    public Bat(Ball ballNew)
+    public Bat(Ball ballNew, int screenWidthN, int screenHeightN)
     {
         super();
         //sound = new SoundEffect("jump.mp3");
         ball = ballNew;
         
-        this.x = Zeichenfenster.MalflächenBreiteGeben() / 2;
-        this.y = Zeichenfenster.MalflächenHöheGeben() - 20;
-        PositionSetzen(x, y);
-        draw();
-    }
-    
-    public void rePaint()
-    {
-        PositionSetzen(XPositionGeben(), YPositionGeben());
-        draw();
+        screenWidth = screenWidthN;
+        screenHeight = screenHeightN;
+        
+        this.x = screenWidth / 2 - BAT_WIDTH / 2;
+        this.y = screenHeight - 20;
+        
+        symbol = new BatSymbol(BAT_WIDTH, BAT_HEIGHT);
+        
+        SichtbarkeitSetzen(false);
+        symbol.draw(x,y);
     }
     
     public void setScale(float scale) {
-         EigeneFigurLöschen();
-         this.width = Math.round(scale * BAT_WIDTH);
-         this.height = Math.round(scale * BAT_HEIGHT);
-         draw();
+        width = (int) (BAT_WIDTH * scale);
+        height = (int) (BAT_HEIGHT * scale);
+        symbol.setScale(scale);
     }
     
     @Override void SonderTasteGedrückt(int taste) {
@@ -41,27 +46,27 @@ public class Bat extends Figur
         {
             // Pfeil nach links + a
             case 37:
-                if(x <= width/5) break;
-                x -= BAT_STEP;
+                if(x <= 0) break;
+                x -= fast ? BAT_STEP * 2 : BAT_STEP;
                 break;
             // Pfeil nach oben
             case 38:
-                if (!advancedControls || y >= height) break;
-                y -= BAT_STEP;
+                if (!advancedControls || y <= height) break;
+                y -= fast ? BAT_STEP * 2 : BAT_STEP;
                 break;
             // Pfeil nach rechts
             case 39:
-                if (x >= Zeichenfenster.MalflächenBreiteGeben() - width / 5) break;
-                x += BAT_STEP;
+                if (x >= screenWidth - width) break;
+                x += fast ? BAT_STEP * 2 : BAT_STEP;
                 break;
             // pfeil nach unten
             case 40:
-                if (!advancedControls || y >= Zeichenfenster.MalflächenHöheGeben() - height) break;
-                y += BAT_STEP;
+                if (!advancedControls || y >= screenHeight - height) break;
+                y += fast ? BAT_STEP * 2 : BAT_STEP;
                 break;
         }
         
-        PositionSetzen(x, y);
+        symbol.draw(x,y);
     }
     
     @Override void TasteGedrückt(char taste) {
@@ -85,24 +90,22 @@ public class Bat extends Figur
         advancedControls = active;
     }
     
+    public void setFast(boolean active) {
+        fast = active;
+    }
+    
     private void draw() {
         FigurteilFestlegenRechteck(-(width / 2), 0, width, height, "grau");
     }
     
     public boolean checkCollisions() {
-        switch (CustomMath.CircleRectangleCollision(ball.getXPos(), ball.getYPos(), ball.getRadius(), x - (width / 2), y, height - (height / 2), width)) {
-                case 0: // No collision
+        if (CustomMath.CircleRectangleCollision(ball.getXPos(), ball.getYPos(), ball.getRadius(), x, y, height, width) > 0) {
+                /*case 0: // No collision
                     return false;
 
                 case 1: // Top
                 case 2: // Bottom
-<<<<<<< HEAD
-
                     //sound.play();
-
-
-=======
->>>>>>> 2a5b0df3ce19e90667c116633e14e6677bd7ec53
                     ball.reflectY();
                     break;
             
@@ -114,18 +117,15 @@ public class Bat extends Figur
                 case 5: // Top-left
                 case 6: // Top-right
                 case 7: // Bottom-left
-                case 8: // Bottom-right
-                    int dx =  (int) (0.1 * (ball.getXPos() - (x + width/2)));
-                    int dy =  (int) (0.1 * (ball.getYPos() - (x + height/2)));
+                case 8: // Bottom-right*/
+                    int dx =  5 * (ball.getXPos() - (x + width/2));
+                    int dy =  -(ball.getYPos() - (x + height/2));
                     ball.setDirection(dx, dy);
-                    break;
+                    return true;
+                    //break;
             }
-<<<<<<< HEAD
-            //sound.play();
-=======
-            sound.play();
->>>>>>> 2a5b0df3ce19e90667c116633e14e6677bd7ec53
-            return true;
+        //sound.play();
+        return false;
     }
     
     public int getWidth() {
@@ -134,5 +134,13 @@ public class Bat extends Figur
     
     public int getHeight() {
         return height;
+    }
+    
+    public int getX() {
+        return x;
+    }
+    
+    public int getY() {
+        return y;
     }
 }

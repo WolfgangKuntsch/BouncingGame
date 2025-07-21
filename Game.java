@@ -20,6 +20,7 @@ public class Game extends Ereignisbehandlung implements Serializable
     private Ball ball;
     private LeftWall leftWall;
     private RightWall rightWall;
+    private UpperWall upperWall;
     
     private Background background;
     private static int BACKGROUND_MIN_STARS = 1;
@@ -51,25 +52,18 @@ public class Game extends Ereignisbehandlung implements Serializable
     public Game()
     {
         super();
-        ball = new Ball(390, 140, 20, 0, 3);
-        character = new Bat(ball);
         
-        rightWall = new RightWall();
-        leftWall = new LeftWall();
-        
-        //new SideWalls();
-
-<<<<<<< HEAD
-=======
-        new RightWall();
-        new LeftWall();
->>>>>>> 2a5b0df3ce19e90667c116633e14e6677bd7ec53
-        new UpperWall();
-
-        win = new WinScreen();
-
         int screenWidth = Zeichenfenster.MalflächenBreiteGeben();
         int screenHeight = Zeichenfenster.MalflächenHöheGeben();
+        
+        ball = new Ball(400, 340, 10, 0, 6);
+        character = new Bat(ball, screenWidth, screenHeight);
+        
+        rightWall = new RightWall(screenWidth, screenHeight);
+        leftWall = new LeftWall(screenWidth, screenHeight);
+        upperWall = new UpperWall(screenWidth, screenHeight);
+
+        win = new WinScreen();
 
         background = new Background(screenWidth, screenHeight, BACKGROUND_MIN_STARS, BACKGROUND_MAX_STARS, BACKGROUND_STAR_MIN_RADIUS, BACKGROUND_STAR_MAX_RADIUS, BACKGROUND_STAR_MIN_DECAY, BACKGROUND_STAR_MAX_DECAY, BACKGROUND_STAR_MIN_DELAY, BACKGROUND_STAR_MAX_DELAY);
         bricks = new BrickController(screenWidth, screenHeight, ball, character, new PowerupController(screenWidth, screenHeight, ball, character, POWERUP_RADIUS, POWERUP_SPEED));
@@ -80,26 +74,36 @@ public class Game extends Ereignisbehandlung implements Serializable
     @Override void TaktImpulsAusführen()
     {
         background.frame();
+        ball.bewegen();
         boolean ballBatCollision = false;
         ballBatCollision = character.checkCollisions();
         bricks.frame(running, ballBatCollision);
-        ball.bewegen();
+        if (CustomMath.CircleRectangleCollision(ball.getXPos(), ball.getYPos(), ball.getRadius(), rightWall.getX(), rightWall.getY(), rightWall.getHeight(), rightWall.getWandDicke()) == 3) 
+        {
+            ball.reflectX();            
+        }
+        
+        if (CustomMath.CircleRectangleCollision(ball.getXPos(), ball.getYPos(), ball.getRadius(), leftWall.getX(), leftWall.getY(), leftWall.getHeight(), leftWall.getWandDicke()) == 4) 
+        {
+            ball.reflectX();            
+        }
+        
+        if (CustomMath.CircleRectangleCollision(ball.getXPos(), ball.getYPos(), ball.getRadius(), upperWall.getX(), upperWall.getY(), upperWall.getWandDicke(), upperWall.getWidth() * 2) == 2 ) 
+        {
+            ball.reflectY();            
+        }
 
         if (bricks.getBrickCount() == 0) {
             win.draw(0,0);
             running = false;
         }
         
-        if (CustomMath.CircleRectangleCollision(ball.getXPos(), ball.getYPos(), ball.getRadius(), 
-            rightWall.XPositionGeben(), rightWall.YPositionGeben(), rightWall.getHeight(), rightWall.getWandDicke()) = 4) 
-            {
-                    
-            }
+        
     }
 
     void StartGame() 
     {
-        TaktdauerSetzen(20);
+        TaktdauerSetzen(10);
         bricks.populateGrid(BRICK_WIDTH, BRICK_HEIGTH, NUM_COLUMNS, NUM_ROWS, BRICK_SPACING);
         running = true;
         Starten();    
@@ -135,6 +139,13 @@ public class Game extends Ereignisbehandlung implements Serializable
                     SaveGame();
                 }
                 break;
+        }
+    }
+    
+    @Override void SonderTasteGedrückt(int taste) {
+        switch (taste) {
+            case 16:
+                character.setFast(true);
         }
     }
 

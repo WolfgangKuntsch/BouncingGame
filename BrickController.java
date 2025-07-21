@@ -77,8 +77,8 @@ public class BrickController {
                 ball.reflectX();
                 break;
             case 5: case 6: case 7: case 8:
-                int dx = (int) (0.1 * (ball.getXPos() - (ball.getXPos() + ball.getRadius())));
-                int dy = (int) (0.1 * (ball.getYPos() - (ball.getYPos() + ball.getRadius())));
+                int dx = (int) -(0.1 * (ball.getXPos() - (ball.getXPos() + ball.getRadius())));
+                int dy = (int) -(0.1 * (ball.getYPos() - (ball.getYPos() + ball.getRadius())));
                 ball.setDirection(dx, dy);
                 break;
         }

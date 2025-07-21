@@ -14,8 +14,10 @@ public class Score {
         if (!running) return;
 
         frameCounter++;
-        if (frameCounter >= 50) {
-            score -= 1; // Passive penalty for time
+        if (frameCounter >= 100) {
+            if (score >= 1) {
+                score -= 1; // Passive penalty for time
+            }
             frameCounter = 0;
         }
 

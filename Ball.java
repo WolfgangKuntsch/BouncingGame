@@ -1,4 +1,5 @@
-public class Ball extends Figur {
+import java.util.*;
+public class Ball {
     private int radius;
     private float dx;
     private float dy;
@@ -7,42 +8,46 @@ public class Ball extends Figur {
     private int startY;
     private boolean verloren;
     private float scale = 1.0f;
+    private double speed;
+    
+    private int xPos;
+    private int yPos;
+    
+    private BallSymbol symbol;
 
-    public Ball(int xPos, int yPos, int radius, float dxNew, float dyNew) {
+    public Ball(int xPosN, int yPosN, int radius, float dxNew, float dyNew) {
         super();
         this.radius = radius;
         this.dx = dxNew;
         this.dy = dyNew;
-        this.startX = xPos;
-        this.startY = yPos;
+        this.startX = xPosN;
+        this.startY = yPosN;
         this.verloren = false;
         
-        FigurteilFestlegenEllipse(-radius, -radius, radius*2, radius*2, "rot");
-        PositionSetzen(xPos, yPos);
-        GanzNachVornBringen();
-    }
-    
-    public void rePaint()
-    {
-        FigurteilFestlegenEllipse(-radius, -radius, radius*2, radius*2, "rot");
-        PositionSetzen(XPositionGeben(), YPositionGeben());
-        GanzNachVornBringen();
+        speed = Math.sqrt(dx * dx + dy * dy);
+        
+        xPos = startX;
+        yPos = startY;
+        
+        symbol = new BallSymbol(radius, "rot");
+        
     }
 
     public void bewegen() {
-        
         if (!verloren) {
-            PositionSetzen((int)(XPositionGeben() + dx * speedMultiplier), 
-                         (int)(YPositionGeben() + dy * speedMultiplier));
+            xPos += (int) dx * speedMultiplier; 
+            yPos += (int) dy * speedMultiplier;
+            
+            symbol.draw(xPos, yPos);
         }
     }
 
     public int getXPos() {
-        return XPositionGeben();
+        return xPos;
     }
 
     public int getYPos() {
-        return YPositionGeben();
+        return yPos;
     }
 
     public int getRadius() {
@@ -66,7 +71,9 @@ public class Ball extends Figur {
     }
 
     public void reset() {
-        PositionSetzen(startX, startY);
+        xPos = startX;
+        yPos = startY;
+        
         verloren = false;
         dx = Math.abs(dx); 
         dy = -Math.abs(dy); 
@@ -74,16 +81,17 @@ public class Ball extends Figur {
 
     public void setScale(float scale) {
         this.scale = scale;
-        EigeneFigurLöschen();
-        FigurteilFestlegenEllipse(-getRadius(), -getRadius(), getRadius()*2, getRadius()*2, "rot");
+        symbol.setScale(scale);
     }
 
     public void setSpeed(float multiplier) {
         this.speedMultiplier = multiplier;
     }
 
-    public void setDirection(float dx, float dy) {
-        this.dx = dx;
-        this.dy = dy;
+    public void setDirection(float dxN, float dyN) {
+        double len = Math.sqrt(dxN * dxN + dyN * dyN);
+        
+        this.dx = (int) ((dxN * speed)/len);
+        this.dy = (int) ((dyN * speed)/len);
     }
 }
