@@ -11,6 +11,8 @@ public class BrickController {
     private int screenWidth;
     private int screenHeight;
     private Random rand = new Random();
+    
+    private boolean piercing = false;
 
     public BrickController(int screenWidthNew, int screenHeightNew, Ball ballNew, Bat batNew, PowerupController powerupControllerNew) {
         ball = ballNew;
@@ -47,8 +49,9 @@ public class BrickController {
     }
 
     public void frame(boolean running, boolean batHit) {
-        powerups.frame();
-
+        setPiercing(powerups.frame());
+        
+        
         var iter = bricks.iterator();
         while (iter.hasNext()) {
             Brick brick = iter.next();
@@ -71,15 +74,17 @@ public class BrickController {
     private void handleBallReflection(int collisionSide) {
         switch (collisionSide) {
             case 1: case 2:
-                ball.reflectY();
+                if (!piercing) ball.reflectY();
                 break;
             case 3: case 4:
-                ball.reflectX();
+                if (!piercing) ball.reflectX();
                 break;
             case 5: case 6: case 7: case 8:
-                int dx = (int) -(0.1 * (ball.getXPos() - (ball.getXPos() + ball.getRadius())));
-                int dy = (int) -(0.1 * (ball.getYPos() - (ball.getYPos() + ball.getRadius())));
-                ball.setDirection(dx, dy);
+                if (!piercing) {
+                    int dx = (int) -(0.1 * (ball.getXPos() - (ball.getXPos() + ball.getRadius())));
+                    int dy = (int) -(0.1 * (ball.getYPos() - (ball.getYPos() + ball.getRadius())));
+                    ball.setDirection(dx, dy);
+                }
                 break;
         }
     }
@@ -97,6 +102,10 @@ public class BrickController {
 
     public int getBrickCount() {
         return bricks.size();
+    }
+    
+    public void setPiercing(boolean pierce) {
+        piercing = pierce;
     }
 
     public Score getScore() {

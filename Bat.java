@@ -14,6 +14,8 @@ public class Bat extends Figur
     private int screenWidth;
     private int screenHeight;
     
+    private boolean autopilot;
+    
     private BatSymbol symbol;
     //private SoundEffect sound;
     
@@ -94,8 +96,16 @@ public class Bat extends Figur
         fast = active;
     }
     
-    private void draw() {
-        FigurteilFestlegenRechteck(-(width / 2), 0, width, height, "grau");
+    public void frame() {
+        if (autopilot) {
+            if (ball.getXPos() - (x + width/2) > 50) {
+                x += fast ? BAT_STEP * 2 : BAT_STEP;
+            }
+            if (ball.getXPos() - (x + width/2) < -50) {
+                x -= fast ? BAT_STEP * 2 : BAT_STEP;
+            }
+            symbol.draw(x,y);
+        }
     }
     
     public boolean checkCollisions() {
@@ -118,7 +128,7 @@ public class Bat extends Figur
                 case 6: // Top-right
                 case 7: // Bottom-left
                 case 8: // Bottom-right*/
-                    int dx =  5 * (ball.getXPos() - (x + width/2));
+                    int dx =  3 * (ball.getXPos() - (x + width/2));
                     int dy =  -(ball.getYPos() - (x + height/2));
                     ball.setDirection(dx, dy);
                     return true;
@@ -126,6 +136,10 @@ public class Bat extends Figur
             }
         //sound.play();
         return false;
+    }
+    
+    public void setAutopilot(boolean doAutopilot) {
+        autopilot = doAutopilot;
     }
     
     public int getWidth() {

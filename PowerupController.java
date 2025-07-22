@@ -15,6 +15,8 @@ public class PowerupController
     private int powerupRadius;
     private int powerupSpeed;
     
+    private boolean isPiercing = false;
+    
     public PowerupController(int screenHeightNew, int screenWidthNew, Ball ballNew, Bat batNew, int powerupRadiusNew, int powerupSpeedNew)
     {
         screenHeight = screenHeightNew;
@@ -35,7 +37,7 @@ public class PowerupController
     }
     
     //Processes the Powerups, called every frame
-    public void frame() {
+    public boolean frame() {
         var iter = powerups.iterator();
         while (iter.hasNext()) {
             Powerup powerup = iter.next();
@@ -52,11 +54,13 @@ public class PowerupController
             if (CustomMath.CircleRectangleCollision(powerup.getXPos(), powerup.getYPos(), powerup.getRadius(), bat.getX(), bat.getY(), bat.getHeight(), bat.getWidth()) > 0) {
                 clearPowerupEffects();
                 powerup.doPowerupEffect();
+                if (powerup instanceof PiercingPowerup) isPiercing = true;
                 iter.remove();
                 powerup.remove();
                 powerups.remove(powerup);
             }
         }
+        return isPiercing;
     }
     
     private void clearPowerupEffects() {
@@ -71,10 +75,14 @@ public class PowerupController
         
         // AdvancedControlsPowerup
         bat.setAdvancedControls(false);
+        
+        isPiercing = false;
+        
+        bat.setAutopilot(false);
     }
     
     public Powerup choosePowerup() {
-        switch (rand.nextInt(35)) {
+        switch (rand.nextInt(18)) {
             case 1:
                 return new FastBallPowerup(powerupRadius, powerupSpeed, ball);
             case 2:
@@ -89,6 +97,10 @@ public class PowerupController
                 return new BigBatPowerup(powerupRadius, powerupSpeed, bat);
             case 7:
                 return new AdvancedControlPowerup(powerupRadius, powerupSpeed, bat);
+            case 8:
+                return new PiercingPowerup(powerupRadius, powerupSpeed);
+            case 9:
+                return new AutopilotPowerup(powerupRadius, powerupSpeed, bat);
             default:
                 return null;
         }

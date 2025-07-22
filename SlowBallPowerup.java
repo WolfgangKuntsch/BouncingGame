@@ -5,7 +5,7 @@ public class SlowBallPowerup extends Powerup
     public SlowBallPowerup(int radiusNew, int speedNew, Ball ballNew)
     {
         super(radiusNew, speedNew);
-        symbol = new PowerupSymbol(radius, "gruen", "SlowBall");
+        symbol = new PowerupSymbol(radius, "rot", "SlowBall");
         ball = ballNew;
     }
     

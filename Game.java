@@ -43,7 +43,11 @@ public class Game extends Ereignisbehandlung implements Serializable
     private static int POWERUP_SPEED = 2;
 
     private WinScreen win;
+    private LoseScreen lose;
     private boolean running;
+    
+    private int screenWidth;
+    private int screenHeight;
     
 
     /**
@@ -53,10 +57,10 @@ public class Game extends Ereignisbehandlung implements Serializable
     {
         super();
         
-        int screenWidth = Zeichenfenster.MalflächenBreiteGeben();
-        int screenHeight = Zeichenfenster.MalflächenHöheGeben();
+        screenWidth = Zeichenfenster.MalflächenBreiteGeben();
+        screenHeight = Zeichenfenster.MalflächenHöheGeben();
         
-        ball = new Ball(400, 340, 10, 0, 6);
+        ball = new Ball(400, 340, 10, 0, 5);
         character = new Bat(ball, screenWidth, screenHeight);
         
         rightWall = new RightWall(screenWidth, screenHeight);
@@ -64,6 +68,7 @@ public class Game extends Ereignisbehandlung implements Serializable
         upperWall = new UpperWall(screenWidth, screenHeight);
 
         win = new WinScreen();
+        lose = new LoseScreen();
 
         background = new Background(screenWidth, screenHeight, BACKGROUND_MIN_STARS, BACKGROUND_MAX_STARS, BACKGROUND_STAR_MIN_RADIUS, BACKGROUND_STAR_MAX_RADIUS, BACKGROUND_STAR_MIN_DECAY, BACKGROUND_STAR_MAX_DECAY, BACKGROUND_STAR_MIN_DELAY, BACKGROUND_STAR_MAX_DELAY);
         bricks = new BrickController(screenWidth, screenHeight, ball, character, new PowerupController(screenWidth, screenHeight, ball, character, POWERUP_RADIUS, POWERUP_SPEED));
@@ -74,10 +79,14 @@ public class Game extends Ereignisbehandlung implements Serializable
     @Override void TaktImpulsAusführen()
     {
         background.frame();
+        character.frame();
         ball.bewegen();
         boolean ballBatCollision = false;
         ballBatCollision = character.checkCollisions();
         bricks.frame(running, ballBatCollision);
+        
+        
+        
         if (CustomMath.CircleRectangleCollision(ball.getXPos(), ball.getYPos(), ball.getRadius(), rightWall.getX(), rightWall.getY(), rightWall.getHeight(), rightWall.getWandDicke()) == 3) 
         {
             ball.reflectX();            
@@ -93,9 +102,16 @@ public class Game extends Ereignisbehandlung implements Serializable
             ball.reflectY();            
         }
 
-        if (bricks.getBrickCount() == 0) {
+        if (bricks.getBrickCount() == 0 && running) {
             win.draw(0,0);
             running = false;
+            ball.setVerloren(true);
+        }
+        
+        if (ball.getYPos() > screenHeight + ball.getRadius() && running) {
+            lose.draw(0,0);
+            running = false;
+            ball.setVerloren(true);
         }
         
         
