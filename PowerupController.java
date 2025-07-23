@@ -64,6 +64,7 @@ public class PowerupController
     }
     
     private void clearPowerupEffects() {
+        /*
         // BigBatPowerup & SmallBatPowerup
         bat.setScale(1f);
         
@@ -78,7 +79,7 @@ public class PowerupController
         
         isPiercing = false;
         
-        bat.setAutopilot(false);
+        bat.setAutopilot(false);*/
     }
     
     public Powerup choosePowerup() {
