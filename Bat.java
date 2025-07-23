@@ -1,7 +1,7 @@
 public class Bat extends Figur
 {
-    private static final int BAT_WIDTH = 300;
-    private static final int BAT_HEIGHT = 20;
+    private static final int BAT_WIDTH = 200;
+    private static final int BAT_HEIGHT = 40;
     private static final int BAT_STEP = 10;
     private int x;
     private int y;
@@ -99,10 +99,10 @@ public class Bat extends Figur
     public void frame() {
         if (autopilot) {
             if (ball.getXPos() - (x + width/2) > 50) {
-                x += fast ? BAT_STEP * 2 : BAT_STEP;
+                SonderTasteGedrückt(39);
             }
             if (ball.getXPos() - (x + width/2) < -50) {
-                x -= fast ? BAT_STEP * 2 : BAT_STEP;
+                SonderTasteGedrückt(37);
             }
             symbol.draw(x,y);
         }
@@ -129,7 +129,7 @@ public class Bat extends Figur
                 case 7: // Bottom-left
                 case 8: // Bottom-right*/
                     int dx =  3 * (ball.getXPos() - (x + width/2));
-                    int dy =  -(ball.getYPos() - (x + height/2));
+                    int dy =  -(ball.getYPos() - (x + height/2) + 2);
                     ball.setDirection(dx, dy);
                     return true;
                     //break;
