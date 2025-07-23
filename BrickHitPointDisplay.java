@@ -8,7 +8,7 @@ public class BrickHitPointDisplay extends Symbol {
 
     public BrickHitPointDisplay() {
         t1 = new Text();
-        t1.FarbeSetzen("rot");
+        t1.FarbeSetzen("gelb");
         t1.TextGrößeSetzen(30);
         t1.GanzNachVornBringen();
         t1.SichtbarkeitSetzen(false);

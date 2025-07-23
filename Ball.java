@@ -91,7 +91,16 @@ public class Ball {
     public void setDirection(float dxN, float dyN) {
         double len = Math.sqrt(dxN * dxN + dyN * dyN);
         
-        this.dx = (int) ((dxN * speed)/len);
-        this.dy = (int) ((dyN * speed)/len);
+        this.dx = (int) ((dxN * speed)/len) ;
+        int dyNew = (int) ((dyN * speed)/len) ;
+        /*if (dyNew == 0 && dyN > 0 ) {
+            this.dy = 1;
+        }
+        else */if (dyNew == 0 && dyN < 0 ){
+            this.dy = -1 ;
+        }
+        else {
+            this.dy = dyNew;
+        }
     }
 }

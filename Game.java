@@ -85,10 +85,11 @@ public class Game extends Ereignisbehandlung implements Serializable
         ballBatCollision = character.checkCollisions();
         bricks.frame(running, ballBatCollision);
         
+        if (ball.getYPos() < screenHeight && (ball.getXPos() < -(ball.getRadius()) || ball.getXPos() > screenWidth + ball.getRadius() || ball.getYPos() < -ball.getRadius())) {
+            ball.reset();
+        }
         
-        
-        if (CustomMath.CircleRectangleCollision(ball.getXPos(), ball.getYPos(), ball.getRadius(), rightWall.getX(), rightWall.getY(), rightWall.getHeight(), rightWall.getWandDicke()) == 3) 
-        {
+        if (CustomMath.CircleRectangleCollision(ball.getXPos(), ball.getYPos(), ball.getRadius(), rightWall.getX(), rightWall.getY(), rightWall.getHeight(), rightWall.getWandDicke()) == 3) {
             ball.reflectX();            
         }
         
@@ -102,13 +103,13 @@ public class Game extends Ereignisbehandlung implements Serializable
             ball.reflectY();            
         }
 
-        if (bricks.getBrickCount() == 0 && running) {
+        if (bricks.getBrickCount() == 0) {
             win.draw(0,0);
             running = false;
             ball.setVerloren(true);
         }
         
-        if (ball.getYPos() > screenHeight + ball.getRadius() && running) {
+        if (ball.getYPos() > screenHeight + ball.getRadius()) {
             lose.draw(0,0);
             running = false;
             ball.setVerloren(true);
