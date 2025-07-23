@@ -1,4 +1,4 @@
-public class Symbol
+public class Symbol extends Ereignisbehandlung
 {
     protected int xPos;
     protected int yPos;
